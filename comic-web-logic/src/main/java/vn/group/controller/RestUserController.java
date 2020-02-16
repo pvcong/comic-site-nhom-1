@@ -6,12 +6,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import vn.group.dto.UserDTO;
 import vn.group.service.UserService;
+import vn.learn.web.utils.GenericCommanderUtilsImpl;
+import vn.learn.web.utils.UserCommanderUtils;
+import vn.learn.web.utils.UserCommanderUtilsImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class RestUserController {
@@ -19,15 +24,26 @@ public class RestUserController {
     @Autowired
     UserService userService;
     @RequestMapping (value = "user", method = RequestMethod.GET)
-    public List<UserDTO> getAll(){
+    public List<UserDTO> getUsers(@ModelAttribute UserCommanderUtilsImpl userCommanderUtils){
         List<UserDTO> userDTOList = new ArrayList<UserDTO>();
         try {
-          userDTOList =  userService.findAll();
+            setupSortAndProperty(userCommanderUtils);
+          userDTOList =  userService.findByproperties
+                  (userCommanderUtils.getProperties(),
+                          userCommanderUtils.getSortProperties(), userCommanderUtils.getLimit(),
+                          userCommanderUtils.getOffset(),null);
         } catch (HibernateException e){
 
         }
         return userDTOList;
     }
+
+    private void setupSortAndProperty(UserCommanderUtilsImpl userCommanderUtils) {
+        if(userCommanderUtils.getObjectDTO() != null){
+            //Map<String,String> propertis = new HashMap<String, String>()
+        }
+    }
+
     @RequestMapping( value = "/user/{id}",method = RequestMethod.GET)
     public UserDTO findUser(HttpServletResponse rep, HttpServletRequest req, @PathVariable(name = "id") Integer id){
         UserDTO userDTOS = null;
@@ -50,6 +66,7 @@ public class RestUserController {
         }
         return userDTOS;
     }
+
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseStatus(code = HttpStatus.CREATED)
     public String saveUser(@RequestBody UserDTO userDTO){

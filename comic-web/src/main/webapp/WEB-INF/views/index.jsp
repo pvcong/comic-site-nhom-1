@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-<h3>HEllo</h3>
+<h3>Hello</h3>
 </body>
 </html>

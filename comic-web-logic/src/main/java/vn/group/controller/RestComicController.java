@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import vn.group.dto.ComicDTO;
 import vn.group.dto.UserDTO;
 import vn.group.service.ComicService;
+import vn.learn.web.utils.ComicGenresCommanderUtils;
+import vn.learn.web.utils.ComicGenresCommanderUtilsImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -59,17 +62,17 @@ public class RestComicController {
         }
 
     }
-    @Transactional
-    @RequestMapping( value = "/comic", method = RequestMethod.GET)
-    public List<ComicDTO> getAllComic(){
-        List<ComicDTO> comicDTOList = null;
-        try {
-           comicDTOList = comicService.findAll();
-        } catch (HibernateException e){
-            String error ="";
-        }
-        return comicDTOList;
-    }
+//    @Transactional
+//    @RequestMapping( value = "/comic", method = RequestMethod.GET)
+//    public List<ComicDTO> getAllComic(){
+//        List<ComicDTO> comicDTOList = null;
+//        try {
+//           comicDTOList = comicService.findAll();
+//        } catch (HibernateException e){
+//            String error ="";
+//        }
+//        return comicDTOList;
+//    }
     @RequestMapping(value = "/comic/ch?{property}={value}", method = RequestMethod.GET)
     public ComicDTO findByPropertyUnique(
             HttpServletRequest req, HttpServletResponse res,
@@ -83,19 +86,20 @@ public class RestComicController {
         }
         return comicDTO;
     }
-//    @RequestMapping(value = "/comic?{property}={value}", method = RequestMethod.GET)
-//    public ComicDTO findByPropertyUnique(
-//            HttpServletRequest req, HttpServletResponse res,
-//            @PathVariable(name = "property") String property, @PathVariable( name = "value") String propertyValue){
-//        ComicDTO comicDTO = null;
-//        try {
-//            comicDTO = comicService.findByPropertyUnique(property,propertyValue);
-//
-//        } catch (HibernateException e) {
-//
-//        }
-//        return comicDTO;
-//    }
+    @RequestMapping (value = "comic", method = RequestMethod.GET)
+    public List<ComicDTO> getComics(@ModelAttribute ComicGenresCommanderUtilsImpl comicGenresCommanderUtils){
+        List<ComicDTO> comicDTOList = new ArrayList<ComicDTO>();
+        try {
+            //setupSortAndProperty(userCommanderUtils);
+            comicDTOList =  comicService.findByproperties
+                    (comicGenresCommanderUtils.getProperties(),
+                            comicGenresCommanderUtils.getSortProperties(), comicGenresCommanderUtils.getLimit(),
+                            comicGenresCommanderUtils.getOffset(),null);
+        } catch (HibernateException e){
+
+        }
+        return comicDTOList;
+    }
 
 
 }

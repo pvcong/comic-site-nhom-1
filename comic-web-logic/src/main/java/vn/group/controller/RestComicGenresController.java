@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import vn.group.dto.ComicDTO;
 import vn.group.dto.ComicGenresDTO;
 import vn.group.service.ComicGenresService;
+import vn.learn.web.utils.ComicGenresCommanderUtils;
+import vn.learn.web.utils.ComicGenresCommanderUtilsImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,10 +62,13 @@ public class RestComicGenresController {
 
     }
     @RequestMapping( value = "/comic/genres", method = RequestMethod.GET)
-    public List<ComicGenresDTO> getAllGenres(){
+    public List<ComicGenresDTO> getGenres(@ModelAttribute ComicGenresCommanderUtilsImpl comicGenresCommanderUtils){
         List<ComicGenresDTO> comicGenresDTOList = null;
         try {
-            comicGenresDTOList = comicGenresService.findAll();
+            comicGenresDTOList = comicGenresService.findByproperties(comicGenresCommanderUtils.getProperties(),
+                    comicGenresCommanderUtils.getSortProperties(),
+                    comicGenresCommanderUtils.getLimit(),
+                    comicGenresCommanderUtils.getOffset(),null);
         } catch (HibernateException e){
 
         }
