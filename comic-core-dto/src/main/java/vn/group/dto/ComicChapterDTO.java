@@ -1,6 +1,7 @@
 package vn.group.dto;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 
 public class ComicChapterDTO {
@@ -12,12 +13,12 @@ public class ComicChapterDTO {
     private String images;
 
     private ComicDTO comicDTO;
-    private String createdDate;
+    private Timestamp createdDate;
 
     public ComicChapterDTO() {
     }
 
-    public ComicChapterDTO(Integer comicChapterId, String name, String images, ComicDTO comicDTO, String createdDate) {
+    public ComicChapterDTO(Integer comicChapterId, String name, String images, ComicDTO comicDTO, Timestamp createdDate) {
         this.comicChapterId = comicChapterId;
         this.name = name;
         this.images = images;
@@ -59,11 +60,11 @@ public class ComicChapterDTO {
         this.comicDTO = comicDTO;
     }
 
-    public String getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 }

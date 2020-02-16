@@ -3,10 +3,13 @@ package vn.group.service;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import vn.group.common.ServiceConstant;
 import vn.group.dal.ComicChapterDAL;
 import vn.group.data.ComicChapterEntity;
 import vn.group.dto.ComicChapterDTO;
 import vn.group.utils.ComicChapterUtils;
+import vn.group.utils.UploadUtils;
 import vn.group.utils.UserUtils;
 
 import java.util.ArrayList;
@@ -16,9 +19,15 @@ import java.util.Map;
 public class ComicChapterServieImpl implements ComicChapterService {
     @Autowired
     ComicChapterDAL comicChapterDAL;
-    public void save(ComicChapterDTO comicChapterDTO) throws HibernateException {
-        if(comicChapterDTO != null){
-            comicChapterDAL.save(ComicChapterUtils.DTO2Entity(comicChapterDTO));
+    public void save(ComicChapterDTO comicChapterDTO, MultipartFile[] multipartFile) throws HibernateException {
+        if(comicChapterDTO != null && multipartFile != null){
+            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage);
+            if((Boolean)result[0] == false)
+            {
+                comicChapterDTO.setImages( result[2].toString());
+                comicChapterDAL.save(ComicChapterUtils.DTO2EntityFull(comicChapterDTO));
+            }
+
         }
     }
 
@@ -41,10 +50,14 @@ public class ComicChapterServieImpl implements ComicChapterService {
         return comicChapterDTO;
     }
 
-    public ComicChapterDTO update(ComicChapterDTO comicChapterDTO) {
+    public ComicChapterDTO update(ComicChapterDTO comicChapterDTO,MultipartFile[] multipartFile) {
         ComicChapterDTO comicChapterDTO1 = null;
-        if(comicChapterDTO != null){
-            comicChapterDTO1 = ComicChapterUtils.entity2DTO(comicChapterDAL.update(ComicChapterUtils.DTO2Entity(comicChapterDTO)));
+        if(comicChapterDTO != null) {
+            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage);
+            if ((Boolean) result[0] == false) {
+                comicChapterDTO.setImages(result[2].toString());
+                comicChapterDTO1 = ComicChapterUtils.entity2DTOFull(comicChapterDAL.update(ComicChapterUtils.DTO2EntityFull(comicChapterDTO)));
+            }
         }
         return comicChapterDTO1;
     }

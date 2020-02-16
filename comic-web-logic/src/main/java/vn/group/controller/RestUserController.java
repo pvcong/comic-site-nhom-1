@@ -54,7 +54,8 @@ public class RestUserController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public String saveUser(@RequestBody UserDTO userDTO){
         try {
-
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            userDTO.setCreatedDate(timestamp);
             userService.save(userDTO);
 
         } catch (HibernateException e){
@@ -66,6 +67,7 @@ public class RestUserController {
     @RequestMapping(value = "user", method = RequestMethod.PUT)
    public void updateUser(@RequestBody UserDTO userDTO){
         try {
+
             userService.update(userDTO);
         } catch (HibernateException e){
 

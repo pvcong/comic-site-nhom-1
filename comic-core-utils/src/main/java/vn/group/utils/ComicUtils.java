@@ -106,12 +106,12 @@ public class ComicUtils {
             comicEntity.setCreatedDate(comicDTO.getCreatedDate());
             comicEntity.setModifiedDate(comicDTO.getModifiedDate());
             comicEntity.setDescription(comicDTO.getDescription());
-            Set<ComicChapterEntity> comicChapterEntities = new HashSet<ComicChapterEntity>();
-
-            Set<ComicGenresEntity> comicGenresEntities = new HashSet<ComicGenresEntity>();
-
-            comicEntity.setComicChapterEntities(comicChapterEntities);
-            comicEntity.setComicGenresEntities(comicGenresEntities);
+//            Set<ComicChapterEntity> comicChapterEntities = new HashSet<ComicChapterEntity>();
+//
+//            Set<ComicGenresEntity> comicGenresEntities = new HashSet<ComicGenresEntity>();
+//
+//            comicEntity.setComicChapterEntities(comicChapterEntities);
+//            comicEntity.setComicGenresEntities(comicGenresEntities);
         }
         return comicEntity;
     }

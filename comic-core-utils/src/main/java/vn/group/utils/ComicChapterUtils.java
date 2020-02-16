@@ -41,4 +41,17 @@ public class ComicChapterUtils {
         }
         return comicChapterEntity;
     }
+    public static ComicChapterEntity DTO2EntityFull(ComicChapterDTO comicChapterDTO){
+        ComicChapterEntity comicChapterEntity = new ComicChapterEntity();
+        if(comicChapterDTO != null){
+            comicChapterEntity.setComicChapterId(comicChapterDTO.getComicChapterId());
+            comicChapterEntity.setName(comicChapterDTO.getName());
+            comicChapterEntity.setCreatedDate(comicChapterDTO.getCreatedDate());
+            comicChapterEntity.setImages(comicChapterDTO.getImages());
+            comicChapterEntity.setComicEntity(ComicUtils.DTO2EntityUsedComicChapter(comicChapterDTO.getComicDTO()));
+            // comicChapterEntity.setComicEntity(ComicUtils.DTO2EntityUsedComicChapter(comicChapterDTO.getComicDTO()));
+
+        }
+        return comicChapterEntity;
+    }
 }

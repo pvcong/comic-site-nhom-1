@@ -12,6 +12,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.filter.HttpPutFormContentFilter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -53,6 +54,7 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter {
     public static PropertySourcesPlaceholderConfigurer placeholderConfigurer(){
         return new PropertySourcesPlaceholderConfigurer();
     }
+
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
@@ -83,8 +85,13 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter {
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(100000);
+        multipartResolver.setMaxUploadSize(1000000);
         return multipartResolver;
+    }
+    @Bean
+    public HttpPutFormContentFilter httpPutFormContentFilter(){
+        HttpPutFormContentFilter httpPutFormContentFilter = new HttpPutFormContentFilter();
+        return httpPutFormContentFilter;
     }
 
 

@@ -10,6 +10,7 @@ import vn.group.service.ComicService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,9 @@ public class RestComicController {
     @RequestMapping( value = "/comic", method = RequestMethod.POST)
     public void saveComic(@ModelAttribute ComicDTO comicDTO){
         try {
-                comicService.save(comicDTO);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            comicDTO.setCreatedDate(timestamp);
+            comicService.save(comicDTO);
             } catch (HibernateException e){
 
             }
@@ -39,6 +42,8 @@ public class RestComicController {
     public void updateComic(@RequestBody  ComicDTO comicDTO){
         ComicDTO result = null;
         try {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            comicDTO.setModifiedDate(timestamp);
             result = comicService.update(comicDTO);
         } catch (HibernateException e){
 

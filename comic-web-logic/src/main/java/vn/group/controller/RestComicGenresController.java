@@ -9,6 +9,7 @@ import vn.group.service.ComicGenresService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -19,6 +20,8 @@ public class RestComicGenresController {
     public ComicGenresDTO findGenresById(@PathVariable( name = "id") Integer id){
         ComicGenresDTO comicGenresDTO = null;
         try {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            comicGenresDTO.setCreatedDate(timestamp);
             comicGenresDTO =  comicGenresService.findById(id);
         } catch (HibernateException e){
 
@@ -39,6 +42,8 @@ public class RestComicGenresController {
     public void updateGenres(@RequestBody  ComicGenresDTO comicGenresDTO){
         ComicGenresDTO result = null;
         try {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            comicGenresDTO.setModifiedDate(timestamp);
             result = comicGenresService.update(comicGenresDTO);
         } catch (HibernateException e){
 

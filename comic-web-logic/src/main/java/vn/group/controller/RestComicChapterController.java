@@ -3,10 +3,12 @@ package vn.group.controller;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vn.group.dto.ComicChapterDTO;
 import vn.group.dto.ComicDTO;
 import vn.group.service.ComicChapterService;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -26,18 +28,22 @@ public class RestComicChapterController {
         return comicChapterDTO;
     }
     @RequestMapping( value = "/comic/chapter", method = RequestMethod.POST)
-    public void saveComicChapter(@ModelAttribute ComicChapterDTO comicChapterDTO){
+    public void saveComicChapter(@ModelAttribute ComicChapterDTO comicChapterDTO, @RequestParam( name = "files")MultipartFile[] multipartFiles){
         try {
-            comicChapterService.save(comicChapterDTO);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            comicChapterDTO.setCreatedDate(timestamp);
+            comicChapterService.save(comicChapterDTO,multipartFiles);
         } catch (HibernateException e){
 
         }
     }
-    @RequestMapping( value = "/comic/chapter", method = RequestMethod.PUT)
-    public void updateComicChapter(@RequestBody  ComicChapterDTO comicChapterDTO){
+    @RequestMapping( value = "/comic/chapter-update", method = RequestMethod.POST)
+    public void updateComicChapter(@ModelAttribute  ComicChapterDTO comicChapterDTO,@RequestParam( name = "files")MultipartFile[] multipartFiles){
         ComicChapterDTO result = null;
         try {
-            result = comicChapterService.update(comicChapterDTO);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            comicChapterDTO.setCreatedDate(timestamp);
+            result = comicChapterService.update(comicChapterDTO,multipartFiles);
         } catch (HibernateException e){
 
         }
