@@ -1,0 +1,3 @@
+insert into user(username,fullname,password,createddate,role) value ('admin','admin',1,'2019-12-07 23:34:55','admin')
+insert into user(username,fullname,password,createddate,role) value ('longbeck','Long bếch',1,'2019-12-07 23:34:55','user')
+insert into user(username,fullname,password,createddate,role) value ('LOL Việt','Việt',1,'2019-12-07 23:34:55','user')

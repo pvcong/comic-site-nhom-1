@@ -1,0 +1,45 @@
+create database comicsite character set utf8mb4
+use comicsite
+create table user (
+userid int primary key auto_increment not null,
+username varchar(255) not null,
+password varchar(255) not null,
+fullname varchar(255) not null,
+createddate timestamp not null,
+role varchar(255) not null
+)
+create table comic(
+comicid int primary key auto_increment not null,
+name varchar(255) not null,
+description text not null,
+author varchar(255) not null,
+banner varchar(255) not null,
+viewtotal bigint not null,
+status varchar(255) not null,
+userid int not null,
+createddate timestamp not null,
+modifieddate timestamp not null
+constraint fk_comic_userid foreign key (userid) references user(userid)
+)
+
+create table comicgenres(
+comicgenresid int primary key not null,
+name varchar(255) not null,
+createddate timestamp not null,
+modifieddate timestamp not null
+)
+create table comichavgenres(
+comicid int not null ,
+comicgenresid int not null,
+constraint pk_comicid_comicgenresid primary key (comicid,comicgenresid),
+constraint fk_comichavgenres_comicid foreign key (comicid) references comic(comicid),
+constraint fk_comichavgenres_comicgenres foreign key (comicgenresid) references comicgenres(comicgenresid)
+)
+create table comicchapter(
+comicchapterid int primary key not null auto_increment,
+name varchar(255) not null,
+images text not null,
+comicid int not null,
+createddate timestamp not null,
+constraint fk_comicchapter_comicid foreign key (comicid) references comic(comicid)
+)

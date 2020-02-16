@@ -1,0 +1,10 @@
+/*.iml
+/comic-web-utils/target
+/comic-web-logic/target
+/comic-web/target
+/comic-core-utils/target
+/comic-core-test/target
+/comic-core-service/target
+/comic-core-dto/target
+/comic-core-data/target
+/comic-core-dal/target
