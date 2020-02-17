@@ -84,11 +84,11 @@ public class GenericDALImpl<ID extends Serializable, T> implements GenericDAL<ID
 
     public T update(T entity) {
         Session session = sessionFactory.openSession();
-        T result;
+        T result = null;
         Transaction transaction = session.beginTransaction();
         try {
-          T object = (T) session.merge(entity);
-            result = object;
+          session.update(entity);
+            //result = object;
             transaction.commit();
         } catch(HibernateException e){
             transaction.rollback();

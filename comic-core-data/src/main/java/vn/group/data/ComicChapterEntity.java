@@ -1,10 +1,13 @@
 package vn.group.data;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "comicchapter")
+
 public class ComicChapterEntity {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)

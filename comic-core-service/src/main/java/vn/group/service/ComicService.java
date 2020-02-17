@@ -1,5 +1,6 @@
 package vn.group.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import vn.group.dto.ComicDTO;
 import vn.group.dto.UserDTO;
 
@@ -8,8 +9,8 @@ import java.util.Map;
 
 public interface ComicService {
     List<ComicDTO> findAll() ;
-    void save(ComicDTO comicDTO);
-    ComicDTO update(ComicDTO comicDTO);
+    void save(ComicDTO comicDTO, MultipartFile[] multipartFiles);
+    ComicDTO update(ComicDTO comicDTO, MultipartFile[] multipartFiles);
     void delete(List<ComicDTO> comicDTOS);
     ComicDTO findById(Integer id);
     List<ComicDTO> findByproperties(Map<String,String> properties, Map<String,String> sortProperties, Integer limit, Integer offset, String whereClause );

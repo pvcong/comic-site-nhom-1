@@ -4,6 +4,7 @@ import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vn.group.dto.UserDTO;
 import vn.group.service.UserService;
 import vn.learn.web.utils.GenericCommanderUtilsImpl;
@@ -30,7 +31,7 @@ public class RestUserController {
             setupSortAndProperty(userCommanderUtils);
           userDTOList =  userService.findByproperties
                   (userCommanderUtils.getProperties(),
-                          userCommanderUtils.getSortProperties(), userCommanderUtils.getLimit(),
+                          userCommanderUtils.getSortPropertiesMap(), userCommanderUtils.getLimit(),
                           userCommanderUtils.getOffset(),null);
         } catch (HibernateException e){
 
@@ -40,8 +41,34 @@ public class RestUserController {
 
     private void setupSortAndProperty(UserCommanderUtilsImpl userCommanderUtils) {
         if(userCommanderUtils.getObjectDTO() != null){
-            //Map<String,String> propertis = new HashMap<String, String>()
+            Map<String,String> propertis = new HashMap<String, String>();
+            UserDTO userDTO = userCommanderUtils.getObjectDTO();
+            if(userDTO.getUserId() != null){
+                propertis.put("id",userDTO.getUserId().toString());
+            }
+            if(userDTO.getFullName() != null){
+                propertis.put("fullname",userDTO.getFullName());
+            }
+            if(userDTO.getUserName() != null){
+                propertis.put("username",userDTO.getUserName());
+            }
+            if(userDTO.getPassword() != null){
+                propertis.put("password", userDTO.getPassword());
+            }
+            if(userDTO.getRole() != null){
+                propertis.put("role",userDTO.getRole());
+            }
+            if(userDTO.getCreatedDate() != null){
+                propertis.put("createddate",userDTO.getCreatedDate().toString());
+            }
+            userCommanderUtils.setProperties(propertis);
+
         }
+        Map<String,String> sortPropertiesMap = new HashMap<String, String>();
+        if(userCommanderUtils.getSortProperty()!= null && userCommanderUtils.getSortValue() != null){
+            sortPropertiesMap.put(userCommanderUtils.getSortProperty(),userCommanderUtils.getSortValue());
+        }
+        userCommanderUtils.setSortPropertiesMap(sortPropertiesMap);
     }
 
     @RequestMapping( value = "/user/{id}",method = RequestMethod.GET)
@@ -54,18 +81,18 @@ public class RestUserController {
         }
         return userDTOS;
     }
-    @RequestMapping(value = "/user?{property}={value}", method = RequestMethod.GET)
-    public UserDTO findByPropertyUnique(
-            HttpServletRequest req, HttpServletResponse res,
-            @PathVariable(name = "property") String property, @PathVariable( name = "value") String propertyValue){
-        UserDTO userDTOS = null;
-        try {
-            userDTOS = userService.findByPropertyUnique(property,propertyValue);
-        } catch (HibernateException e) {
-
-        }
-        return userDTOS;
-    }
+//    @RequestMapping(value = "/user?{property}={value}", method = RequestMethod.GET)
+//    public UserDTO findByPropertyUnique(
+//            HttpServletRequest req, HttpServletResponse res,
+//            @PathVariable(name = "property") String property, @PathVariable( name = "value") String propertyValue){
+//        UserDTO userDTOS = null;
+//        try {
+//            userDTOS = userService.findByPropertyUnique(property,propertyValue);
+//        } catch (HibernateException e) {
+//
+//        }
+//        return userDTOS;
+//    }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseStatus(code = HttpStatus.CREATED)

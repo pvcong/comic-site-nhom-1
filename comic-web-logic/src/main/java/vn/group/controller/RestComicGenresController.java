@@ -12,7 +12,9 @@ import vn.learn.web.utils.ComicGenresCommanderUtilsImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class RestComicGenresController {
@@ -23,8 +25,9 @@ public class RestComicGenresController {
         ComicGenresDTO comicGenresDTO = null;
         try {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            comicGenresDTO.setCreatedDate(timestamp);
+
             comicGenresDTO =  comicGenresService.findById(id);
+            comicGenresDTO.setCreatedDate(timestamp);
         } catch (HibernateException e){
 
         }
@@ -65,8 +68,9 @@ public class RestComicGenresController {
     public List<ComicGenresDTO> getGenres(@ModelAttribute ComicGenresCommanderUtilsImpl comicGenresCommanderUtils){
         List<ComicGenresDTO> comicGenresDTOList = null;
         try {
+            setupPropertiesandSort(comicGenresCommanderUtils);
             comicGenresDTOList = comicGenresService.findByproperties(comicGenresCommanderUtils.getProperties(),
-                    comicGenresCommanderUtils.getSortProperties(),
+                    comicGenresCommanderUtils.getSortPropertiesMap(),
                     comicGenresCommanderUtils.getLimit(),
                     comicGenresCommanderUtils.getOffset(),null);
         } catch (HibernateException e){
@@ -74,16 +78,41 @@ public class RestComicGenresController {
         }
         return comicGenresDTOList;
     }
-    @RequestMapping(value = "/comic/genres?{property}={value}", method = RequestMethod.GET)
-    public ComicGenresDTO findByPropertyUnique(
-            HttpServletRequest req, HttpServletResponse res,
-            @PathVariable(name = "property") String property, @PathVariable( name = "value") String propertyValue){
-        ComicGenresDTO comicGenresDTO = null;
-        try {
-            comicGenresDTO = comicGenresService.findByPropertyUnique(property,propertyValue);
-        } catch (HibernateException e) {
 
+    private void setupPropertiesandSort(ComicGenresCommanderUtilsImpl comicGenresCommanderUtils) {
+        if(comicGenresCommanderUtils.getObjectDTO() != null){
+            ComicGenresDTO comicGenresDTO = comicGenresCommanderUtils.getObjectDTO();
+            Map<String,String> propertiesMap = new HashMap<String, String>();
+            if(comicGenresDTO.getName() != null){
+                propertiesMap.put("name", comicGenresDTO.getName());
+            }
+            if(comicGenresDTO.getComicGenresId() != null){
+                propertiesMap.put("id", comicGenresDTO.getComicGenresId().toString());
+            }
+            if(comicGenresDTO.getModifiedDate() != null){
+                propertiesMap.put("modifieddate", comicGenresDTO.getModifiedDate().toString());
+            }
+            if(comicGenresDTO.getCreatedDate() != null){
+                propertiesMap.put("createddate", comicGenresDTO.getCreatedDate().toString());
+            }
+            comicGenresCommanderUtils.setProperties(propertiesMap);
         }
-        return comicGenresDTO;
+        if(comicGenresCommanderUtils.getSortProperty() != null && comicGenresCommanderUtils.getProperties() != null){
+            Map<String,String> sortMap = new HashMap<String, String>();
+            sortMap.put(comicGenresCommanderUtils.getSortProperty(), comicGenresCommanderUtils.getSortValue());
+            comicGenresCommanderUtils.setSortPropertiesMap(sortMap);
+        }
     }
+//    @RequestMapping(value = "/comic/genres?{property}={value}", method = RequestMethod.GET)
+//    public ComicGenresDTO findByPropertyUnique(
+//            HttpServletRequest req, HttpServletResponse res,
+//            @PathVariable(name = "property") String property, @PathVariable( name = "value") String propertyValue){
+//        ComicGenresDTO comicGenresDTO = null;
+//        try {
+//            comicGenresDTO = comicGenresService.findByPropertyUnique(property,propertyValue);
+//        } catch (HibernateException e) {
+//
+//        }
+//        return comicGenresDTO;
+//    }
 }

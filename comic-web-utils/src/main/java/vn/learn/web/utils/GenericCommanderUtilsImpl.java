@@ -11,7 +11,9 @@ public class GenericCommanderUtilsImpl<T> implements GenericCommanderUtils<T>{
     private Integer offset = 0;
     private Integer maxResult;
     private Integer size = 0;
-    private Map<String,String> sortProperties;
+    private Map<String,String> sortPropertiesMap;
+    private String sortProperty;
+    private String sortValue;
     private Map<String,String> properties;
     private Integer page = 0;
     private T objectDTO;
@@ -27,12 +29,28 @@ public class GenericCommanderUtilsImpl<T> implements GenericCommanderUtils<T>{
     public GenericCommanderUtilsImpl() {
     }
 
-    public Map<String, String> getSortProperties() {
-        return sortProperties;
+    public Map<String, String> getSortPropertiesMap() {
+        return sortPropertiesMap;
     }
 
-    public void setSortProperties(Map<String, String> sortProperties) {
-        this.sortProperties = sortProperties;
+    public void setSortPropertiesMap(Map<String, String> sortPropertiesMap) {
+        this.sortPropertiesMap = sortPropertiesMap;
+    }
+
+    public String getSortProperty() {
+        return sortProperty;
+    }
+
+    public void setSortProperty(String sortProperty) {
+        this.sortProperty = sortProperty;
+    }
+
+    public String getSortValue() {
+        return sortValue;
+    }
+
+    public void setSortValue(String sortValue) {
+        this.sortValue = sortValue;
     }
 
     public Map<String, String> getProperties() {

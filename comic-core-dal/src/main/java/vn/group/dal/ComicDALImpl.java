@@ -15,8 +15,7 @@ public class ComicDALImpl extends GenericDALImpl<Integer, ComicEntity> implement
         Transaction transaction = session.beginTransaction();
         try {
             StringBuilder stringBuilder = new StringBuilder("FROM ComicEntity comic ")
-                    .append(" JOIN FETCH comic.comicGenresEntities " +
-                            "JOIN FETCH comic.userEntity")
+                    .append(" JOIN FETCH comic.comicGenresEntities ")
                     .append(" WHERE comic.id = :comicid");
 
             Query query = session.createQuery(stringBuilder.toString());

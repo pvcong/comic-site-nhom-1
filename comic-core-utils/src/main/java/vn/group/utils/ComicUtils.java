@@ -17,7 +17,7 @@ public class ComicUtils {
         if(comicEntity != null){
             comicDTO.setComicId(comicEntity.getComicId());
             comicDTO.setName(comicEntity.getName());
-            comicDTO.setUserDTO(UserUtils.entity2DTO(comicEntity.getUserEntity()));
+
             comicDTO.setStatus(comicEntity.getStatus());
             comicDTO.setAuthor(comicEntity.getAuthor());
             comicDTO.setViewTotal(comicEntity.getViewTotal());
@@ -30,13 +30,7 @@ public class ComicUtils {
 //                ComicChapterDTO comicChapterDTO = ComicChapterUtils.entity2DTO(item);
 //                comicChapterDTOS.add(comicChapterDTO);
 //            }
-            Set<ComicGenresDTO> comicGenresDTOS = new LinkedHashSet<ComicGenresDTO>();
-            for(ComicGenresEntity item : comicEntity.getComicGenresEntities()){
-                ComicGenresDTO comicGenresDTO = ComicGenresUtils.entity2DTO(item);
-                comicGenresDTOS.add(comicGenresDTO);
-            }
-            //comicDTO.setComicChapterEntities(comicChapterDTOS);
-            comicDTO.setComicGenresEntities(comicGenresDTOS);
+
 
         }
         return comicDTO;
@@ -48,7 +42,7 @@ public class ComicUtils {
             comicEntity.setComicId(comicDTO.getComicId());
             comicEntity.setName(comicDTO.getName());
             comicEntity.setStatus(comicDTO.getStatus());
-            comicEntity.setUserEntity(UserUtils.DTO2Entity(comicDTO.getUserDTO()));
+
             comicEntity.setAuthor(comicDTO.getAuthor());
             comicEntity.setViewTotal(comicDTO.getViewTotal());
             comicEntity.setBanner(comicDTO.getBanner());
@@ -60,13 +54,7 @@ public class ComicUtils {
 //                ComicChapterEntity comicChapterEntity = ComicChapterUtils.DTO2Entity(item);
 //                comicChapterEntities.add(comicChapterEntity);
 //            }
-            Set<ComicGenresEntity> comicGenresEntities = new HashSet<ComicGenresEntity>();
-            for(ComicGenresDTO item : comicDTO.getComicGenresEntities()){
-                ComicGenresEntity comicGenresEntity = ComicGenresUtils.DTO2Entity(item);
-                comicGenresEntities.add(comicGenresEntity);
-            }
-            //comicEntity.setComicChapterEntities(comicChapterEntities);
-            comicEntity.setComicGenresEntities(comicGenresEntities);
+
         }
         return comicEntity;
     }
