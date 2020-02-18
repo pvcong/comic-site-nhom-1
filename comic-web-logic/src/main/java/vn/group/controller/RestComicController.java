@@ -26,7 +26,7 @@ public class RestComicController {
     @Autowired
     ComicService comicService;
     @RequestMapping( value = "/comic/{id}", method = RequestMethod.GET)
-    public ComicDTO findDetailComic(@PathVariable( name = "id") Integer id){
+    public ComicDTO getDetailComicById(@PathVariable( name = "id") Integer id){
         ComicDTO comicDTO = null;
         try {
             comicDTO =  comicService.findDetaiComicUntique(id);
@@ -66,8 +66,6 @@ public class RestComicController {
                 comicGenresDTOS.add(comicGenresDTO);
             }
             UserEntity userEntity = UserUtils.DTO2Entity(comicDTO.getUserDTO());
-
-            comicDTO.setCreatedDate(timestamp);
             comicDTO.setModifiedDate(timestamp);
             comicDTO.setComicGenresEntities(comicGenresDTOS);
             result = comicService.update(comicDTO, file);

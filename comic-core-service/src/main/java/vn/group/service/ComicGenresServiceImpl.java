@@ -1,5 +1,6 @@
 package vn.group.service;
 
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class ComicGenresServiceImpl implements ComicGenresService {
     @Autowired
     ComicGenresDAL comicGenresDAL;
-    public List<ComicGenresDTO> findAll() {
+    public List<ComicGenresDTO> findAll() throws HibernateException {
         List<ComicGenresDTO> comicGenresDTOList = new ArrayList<ComicGenresDTO>();
         List<ComicGenresEntity> comicGenresEntityList = comicGenresDAL.findAll();
         for (ComicGenresEntity item : comicGenresEntityList){
@@ -25,14 +26,14 @@ public class ComicGenresServiceImpl implements ComicGenresService {
         return comicGenresDTOList;
     }
 
-    public void save(ComicGenresDTO comicGenresDTO) {
+    public void save(ComicGenresDTO comicGenresDTO) throws HibernateException {
         if(comicGenresDTO != null){
             ComicGenresEntity comicGenresEntity = ComicGenresUtils.DTO2Entity(comicGenresDTO);
             comicGenresDAL.save(comicGenresEntity);
         }
     }
 
-    public ComicGenresDTO update(ComicGenresDTO comicGenresDTO) {
+    public ComicGenresDTO update(ComicGenresDTO comicGenresDTO) throws HibernateException {
         ComicGenresDTO result = null;
         if(comicGenresDTO != null){
             ComicGenresEntity comicGenresEntity = comicGenresDAL.update(ComicGenresUtils.DTO2Entity(comicGenresDTO));
@@ -41,7 +42,7 @@ public class ComicGenresServiceImpl implements ComicGenresService {
         return result;
     }
 
-    public void delete(List<ComicGenresDTO> comicGenresDTOS) {
+    public void delete(List<ComicGenresDTO> comicGenresDTOS) throws HibernateException{
         if(comicGenresDTOS != null){
             List<ComicGenresEntity> comicGenresEntityList = new ArrayList<ComicGenresEntity>();
             for(ComicGenresDTO item : comicGenresDTOS){
@@ -52,7 +53,7 @@ public class ComicGenresServiceImpl implements ComicGenresService {
         }
     }
 
-    public ComicGenresDTO findById(Integer id) {
+    public ComicGenresDTO findById(Integer id) throws HibernateException {
         ComicGenresDTO comicGenresDTO = null;
         if(id != null){
             comicGenresDTO = ComicGenresUtils.entity2DTO(comicGenresDAL.findById(id));
@@ -70,7 +71,7 @@ public class ComicGenresServiceImpl implements ComicGenresService {
         return comicGenresDTOList;
     }
 
-    public ComicGenresDTO findByPropertyUnique(String property, Object propertyValue) {
+    public ComicGenresDTO findByPropertyUnique(String property, Object propertyValue) throws HibernateException {
         ComicGenresDTO comicGenresDTO = null;
         if(!StringUtils.isEmpty(property) && !StringUtils.isEmpty(propertyValue)){
            comicGenresDTO = ComicGenresUtils.entity2DTO(comicGenresDAL.findByPropertyUnique(property,propertyValue));

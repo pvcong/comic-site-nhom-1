@@ -21,7 +21,7 @@ public class RestComicGenresController {
     @Autowired
     ComicGenresService comicGenresService;
     @RequestMapping( value = "/comic/genres/{id}", method = RequestMethod.GET)
-    public ComicGenresDTO findGenresById(@PathVariable( name = "id") Integer id){
+    public ComicGenresDTO getGenresById(@PathVariable( name = "id") Integer id){
         ComicGenresDTO comicGenresDTO = null;
         try {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -36,7 +36,7 @@ public class RestComicGenresController {
     }
 
     @RequestMapping( value = "/comic/genres", method = RequestMethod.POST)
-    public void saveGenres(@ModelAttribute ComicGenresDTO comicGenresDTO){
+    public void saveGenres(@RequestBody ComicGenresDTO comicGenresDTO){
         try {
             comicGenresService.save(comicGenresDTO);
         } catch (HibernateException e){

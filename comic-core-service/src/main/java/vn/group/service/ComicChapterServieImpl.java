@@ -50,7 +50,7 @@ public class ComicChapterServieImpl implements ComicChapterService {
         return comicChapterDTO;
     }
 
-    public ComicChapterDTO update(ComicChapterDTO comicChapterDTO,MultipartFile[] multipartFile) {
+    public ComicChapterDTO update(ComicChapterDTO comicChapterDTO,MultipartFile[] multipartFile) throws HibernateException{
         ComicChapterDTO comicChapterDTO1 = null;
         if(comicChapterDTO != null) {
             Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage);
@@ -62,7 +62,7 @@ public class ComicChapterServieImpl implements ComicChapterService {
         return comicChapterDTO1;
     }
 
-    public List<ComicChapterDTO> findByproperties(Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) {
+    public List<ComicChapterDTO> findByproperties(Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) throws HibernateException {
         List<ComicChapterDTO> comicChapterDTOList = new ArrayList<ComicChapterDTO>();
         List<ComicChapterEntity> comicChapterEntities = comicChapterDAL.findByProperty(properties, sortProperties, limit, offset, whereClause);
         for(ComicChapterEntity comicChapterEntity : comicChapterEntities){

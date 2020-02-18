@@ -43,9 +43,28 @@ public class ComicEntity {
     private Timestamp createdDate;
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comicEntity")
+    private List<ComicCommentEntity> comicCommentEntities;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comicEntity")
+    private List<ComicReviewEntity> comicReviewEntities;
     public UserEntity getUserEntity() {
         return userEntity;
+    }
+
+    public List<ComicCommentEntity> getComicCommentEntities() {
+        return comicCommentEntities;
+    }
+
+    public void setComicCommentEntities(List<ComicCommentEntity> comicCommentEntities) {
+        this.comicCommentEntities = comicCommentEntities;
+    }
+
+    public List<ComicReviewEntity> getComicReviewEntities() {
+        return comicReviewEntities;
+    }
+
+    public void setComicReviewEntities(List<ComicReviewEntity> comicReviewEntities) {
+        this.comicReviewEntities = comicReviewEntities;
     }
 
     public void setUserEntity(UserEntity userEntity) {

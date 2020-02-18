@@ -24,7 +24,10 @@ public class UserEntity {
     private String role;
     @Column(name = "createddate")
     private Timestamp createdDate;
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
+    private List<ComicCommentEntity> comicCommentEntities;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
+    private List<ComicReviewEntity> comicReviewEntities;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
     private List<ComicEntity> comicEntities;
 
