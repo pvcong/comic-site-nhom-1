@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vn.group.dto.UserDTO;
+import vn.group.exception.ExecDatabaseException;
+import vn.group.exception.NotFoundObjectException;
 import vn.group.service.UserService;
 import vn.learn.web.utils.GenericCommanderUtilsImpl;
 import vn.learn.web.utils.UserCommanderUtils;
@@ -24,6 +26,7 @@ public class RestUserController {
 
     @Autowired
     UserService userService;
+    @ResponseStatus(code = HttpStatus.OK)
     @RequestMapping (value = "user", method = RequestMethod.GET)
     public List<UserDTO> getUsers(@ModelAttribute UserCommanderUtilsImpl userCommanderUtils){
         List<UserDTO> userDTOList = new ArrayList<UserDTO>();
@@ -70,7 +73,7 @@ public class RestUserController {
         }
         userCommanderUtils.setSortPropertiesMap(sortPropertiesMap);
     }
-
+    @ResponseStatus(code = HttpStatus.OK)
     @RequestMapping( value = "/user/{id}",method = RequestMethod.GET)
     public UserDTO findUser(HttpServletResponse rep, HttpServletRequest req, @PathVariable(name = "id") Integer id){
         UserDTO userDTOS = null;
@@ -79,7 +82,9 @@ public class RestUserController {
         } catch (HibernateException e) {
 
         }
+        if(userDTOS != null && userDTOS.getUserId() != null)
         return userDTOS;
+        else throw new NotFoundObjectException(id);
     }
 //    @RequestMapping(value = "/user?{property}={value}", method = RequestMethod.GET)
 //    public UserDTO findByPropertyUnique(
@@ -96,33 +101,35 @@ public class RestUserController {
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public String saveUser(@RequestBody UserDTO userDTO){
+    public void saveUser(@RequestBody UserDTO userDTO){
         try {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             userDTO.setCreatedDate(timestamp);
             userService.save(userDTO);
 
         } catch (HibernateException e){
-            return "error";
+            throw new ExecDatabaseException(e.getLocalizedMessage());
         }
-        return "complet";
+        //return "complet";
 
     }
     @RequestMapping(value = "user", method = RequestMethod.PUT)
+    @ResponseStatus(code = HttpStatus.CREATED)
    public void updateUser(@RequestBody UserDTO userDTO){
         try {
 
             userService.update(userDTO);
         } catch (HibernateException e){
-
+            throw new ExecDatabaseException(e.getLocalizedMessage());
         }
     }
+    @ResponseStatus( code = HttpStatus.NO_CONTENT)
     @RequestMapping(value = "user", method = RequestMethod.DELETE)
     public void deleteUser(@RequestBody List<UserDTO> userDTOList){
         try {
             userService.delete(userDTOList);
         } catch (HibernateException e){
-
+            throw new ExecDatabaseException(e.getLocalizedMessage());
         }
     }
 

@@ -18,6 +18,7 @@
         <module>comic-web</module>
         <module>comic-web-utils</module>
         <module>comic-core-test</module>
+        <module>comic-web-exception</module>
     </modules>
 
     <properties>

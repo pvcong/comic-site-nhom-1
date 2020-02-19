@@ -2,9 +2,12 @@ package vn.group.controller;
 
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import vn.group.dto.ComicDTO;
 import vn.group.dto.ComicGenresDTO;
+import vn.group.exception.ExecDatabaseException;
+import vn.group.exception.NotFoundObjectException;
 import vn.group.service.ComicGenresService;
 import vn.learn.web.utils.ComicGenresCommanderUtils;
 import vn.learn.web.utils.ComicGenresCommanderUtilsImpl;
@@ -20,21 +23,27 @@ import java.util.Map;
 public class RestComicGenresController {
     @Autowired
     ComicGenresService comicGenresService;
+    @ResponseStatus(code = HttpStatus.OK)
     @RequestMapping( value = "/comic/genres/{id}", method = RequestMethod.GET)
     public ComicGenresDTO getGenresById(@PathVariable( name = "id") Integer id){
         ComicGenresDTO comicGenresDTO = null;
         try {
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
 
             comicGenresDTO =  comicGenresService.findById(id);
-            comicGenresDTO.setCreatedDate(timestamp);
+
         } catch (HibernateException e){
 
         }
+        if(comicGenresDTO != null && comicGenresDTO.getComicGenresId()!= null){
+            return comicGenresDTO;
+        }
+        else {
+            throw new NotFoundObjectException(id);
+        }
 
-        return comicGenresDTO;
     }
-
+    @ResponseStatus(code = HttpStatus.CREATED)
     @RequestMapping( value = "/comic/genres", method = RequestMethod.POST)
     public void saveGenres(@RequestBody ComicGenresDTO comicGenresDTO){
         try {
@@ -43,6 +52,7 @@ public class RestComicGenresController {
 
         }
     }
+    @ResponseStatus(code = HttpStatus.CREATED)
     @RequestMapping( value = "/comic/genres", method = RequestMethod.PUT)
     public void updateGenres(@RequestBody  ComicGenresDTO comicGenresDTO){
         ComicGenresDTO result = null;
@@ -51,19 +61,21 @@ public class RestComicGenresController {
             comicGenresDTO.setModifiedDate(timestamp);
             result = comicGenresService.update(comicGenresDTO);
         } catch (HibernateException e){
-
+            throw new ExecDatabaseException(e.getLocalizedMessage());
         }
 
     }
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @RequestMapping( value = "/comic/genres", method = RequestMethod.DELETE)
     public void deleteGenres(@RequestBody List<ComicGenresDTO> comicGenresDTOList){
         try {
             comicGenresService.delete(comicGenresDTOList);
         } catch (HibernateException e){
-
+            throw new ExecDatabaseException(e.getLocalizedMessage());
         }
 
     }
+    @ResponseStatus(code = HttpStatus.OK)
     @RequestMapping( value = "/comic/genres", method = RequestMethod.GET)
     public List<ComicGenresDTO> getGenres(@ModelAttribute ComicGenresCommanderUtilsImpl comicGenresCommanderUtils){
         List<ComicGenresDTO> comicGenresDTOList = null;
@@ -74,7 +86,7 @@ public class RestComicGenresController {
                     comicGenresCommanderUtils.getLimit(),
                     comicGenresCommanderUtils.getOffset(),null);
         } catch (HibernateException e){
-
+            throw new ExecDatabaseException(e.getLocalizedMessage());
         }
         return comicGenresDTOList;
     }

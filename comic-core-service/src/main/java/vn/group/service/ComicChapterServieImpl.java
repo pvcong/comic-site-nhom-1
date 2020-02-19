@@ -19,9 +19,9 @@ import java.util.Map;
 public class ComicChapterServieImpl implements ComicChapterService {
     @Autowired
     ComicChapterDAL comicChapterDAL;
-    public void save(ComicChapterDTO comicChapterDTO, MultipartFile[] multipartFile) throws HibernateException {
+    public void save(ComicChapterDTO comicChapterDTO, MultipartFile[] multipartFile,String path) throws HibernateException {
         if(comicChapterDTO != null && multipartFile != null){
-            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage);
+            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage,path);
             if((Boolean)result[0] == false)
             {
                 comicChapterDTO.setImages( result[2].toString());
@@ -50,10 +50,10 @@ public class ComicChapterServieImpl implements ComicChapterService {
         return comicChapterDTO;
     }
 
-    public ComicChapterDTO update(ComicChapterDTO comicChapterDTO,MultipartFile[] multipartFile) throws HibernateException{
+    public ComicChapterDTO update(ComicChapterDTO comicChapterDTO,MultipartFile[] multipartFile,String path) throws HibernateException{
         ComicChapterDTO comicChapterDTO1 = null;
         if(comicChapterDTO != null) {
-            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage);
+            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage,path);
             if ((Boolean) result[0] == false) {
                 comicChapterDTO.setImages(result[2].toString());
                 comicChapterDTO1 = ComicChapterUtils.entity2DTOFull(comicChapterDAL.update(ComicChapterUtils.DTO2EntityFull(comicChapterDTO)));

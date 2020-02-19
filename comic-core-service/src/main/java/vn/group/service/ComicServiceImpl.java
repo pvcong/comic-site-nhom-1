@@ -39,9 +39,9 @@ public class ComicServiceImpl implements ComicService {
         return comicDTOS;
     }
 
-    public void save(ComicDTO comicDTO, MultipartFile[] multipartFile) throws HibernateException {
+    public void save(ComicDTO comicDTO, MultipartFile[] multipartFile, String path) throws HibernateException {
         if(comicDTO != null){
-            Object[] objects = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicBanner);
+            Object[] objects = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicBanner,path);
             if((Boolean)objects[0] == false ){
                 comicDTO.setBanner(objects[2].toString());
                 ComicEntity comicEntity = ComicUtils.DTO2Entity(comicDTO);
@@ -59,8 +59,8 @@ public class ComicServiceImpl implements ComicService {
         }
     }
 
-    public ComicDTO update(ComicDTO comicDTO, MultipartFile[] multipartFile) throws HibernateException {
-        if(comicDTO != null){ Object[] objects = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicBanner);
+    public ComicDTO update(ComicDTO comicDTO, MultipartFile[] multipartFile,String path) throws HibernateException {
+        if(comicDTO != null){ Object[] objects = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicBanner,path);
             if((Boolean)objects[0] == false){
                 comicDTO.setBanner(objects[2].toString());
                 Set<ComicGenresEntity> comicGenresEntities = new LinkedHashSet<ComicGenresEntity>();
@@ -99,7 +99,13 @@ public class ComicServiceImpl implements ComicService {
         List<ComicDTO> comicDTOS = new ArrayList<ComicDTO>();
         List<ComicEntity> comicEntities = comicDAL.findByProperty(properties,sortProperties,limit,offset,whereClause);
         for(ComicEntity item : comicEntities){
+            Set<ComicGenresEntity> comicGenresEntity = item.getComicGenresEntities();
+            Set<ComicGenresDTO> comicGenresDTOS = new LinkedHashSet<ComicGenresDTO>();
+            for(ComicGenresEntity genresEntity : comicGenresEntity){
+                comicGenresDTOS.add(ComicGenresUtils.entity2DTO(genresEntity));
+            }
             ComicDTO comicDTO = ComicUtils.entity2DTO(item);
+            comicDTO.setComicGenresEntities(comicGenresDTOS);
             comicDTOS.add(comicDTO);
         }
         return comicDTOS;

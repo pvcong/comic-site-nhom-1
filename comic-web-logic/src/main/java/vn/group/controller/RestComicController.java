@@ -2,6 +2,7 @@ package vn.group.controller;
 
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,6 +10,8 @@ import vn.group.data.UserEntity;
 import vn.group.dto.ComicDTO;
 import vn.group.dto.ComicGenresDTO;
 import vn.group.dto.UserDTO;
+import vn.group.exception.ExecDatabaseException;
+import vn.group.exception.NotFoundObjectException;
 import vn.group.service.ComicService;
 import vn.group.utils.UserUtils;
 import vn.learn.web.utils.ComicCommanderUtils;
@@ -25,6 +28,7 @@ import java.util.*;
 public class RestComicController {
     @Autowired
     ComicService comicService;
+    @ResponseStatus(code = HttpStatus.OK)
     @RequestMapping( value = "/comic/{id}", method = RequestMethod.GET)
     public ComicDTO getDetailComicById(@PathVariable( name = "id") Integer id){
         ComicDTO comicDTO = null;
@@ -33,11 +37,16 @@ public class RestComicController {
         } catch (HibernateException e){
 
         }
-
-        return comicDTO;
+        if(comicDTO!= null && comicDTO.getComicId()!= null) {
+            return comicDTO;
+        }
+         else {
+            throw new NotFoundObjectException(id);
+        }
     }
+    @ResponseStatus(code = HttpStatus.CREATED)
     @RequestMapping( value = "/comic", method = RequestMethod.POST)
-    public void saveComic(@ModelAttribute ComicDTO comicDTO, @RequestParam MultipartFile[] file, String[] comicGenresId){
+    public void saveComic(HttpServletRequest req,@ModelAttribute ComicDTO comicDTO, @RequestParam MultipartFile[] file, String[] comicGenresId){
         try {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             Set<ComicGenresDTO> comicGenresDTOS = new HashSet<ComicGenresDTO>();
@@ -49,13 +58,14 @@ public class RestComicController {
             comicDTO.setCreatedDate(timestamp);
             comicDTO.setModifiedDate(timestamp);
             comicDTO.setComicGenresEntities(comicGenresDTOS);
-            comicService.save(comicDTO,file);
+            comicService.save(comicDTO,file,req.getRealPath(""));
             } catch (HibernateException e){
-
+            throw new ExecDatabaseException(e.getLocalizedMessage());
             }
     }
+    @ResponseStatus(code = HttpStatus.CREATED)
     @RequestMapping( value = "/comic-update", method = RequestMethod.POST)
-    public void updateComic(@ModelAttribute  ComicDTO comicDTO, @RequestParam MultipartFile[] file, String[] comicGenresId){
+    public void updateComic(HttpServletRequest req,@ModelAttribute  ComicDTO comicDTO, @RequestParam MultipartFile[] file, String[] comicGenresId){
         ComicDTO result = null;
         try {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -68,18 +78,19 @@ public class RestComicController {
             UserEntity userEntity = UserUtils.DTO2Entity(comicDTO.getUserDTO());
             comicDTO.setModifiedDate(timestamp);
             comicDTO.setComicGenresEntities(comicGenresDTOS);
-            result = comicService.update(comicDTO, file);
+            result = comicService.update(comicDTO, file,req.getRealPath("w"));
         } catch (HibernateException e){
-
+            throw new ExecDatabaseException(e.getLocalizedMessage());
         }
 
     }
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @RequestMapping( value = "/comic", method = RequestMethod.DELETE)
     public void deleteComic(@RequestBody  List<ComicDTO> comicDTO){
         try {
             comicService.delete(comicDTO);
         } catch (HibernateException e){
-
+            throw new ExecDatabaseException(e.getLocalizedMessage());
         }
 
     }
@@ -107,6 +118,7 @@ public class RestComicController {
 //        }
 //        return comicDTO;
 //    }
+@ResponseStatus(code = HttpStatus.OK)
     @RequestMapping (value = "comic", method = RequestMethod.GET)
     public List<ComicDTO> getComics(@ModelAttribute ComicCommanderUtilsImpl comicCommanderUtils){
         List<ComicDTO> comicDTOList = new ArrayList<ComicDTO>();
