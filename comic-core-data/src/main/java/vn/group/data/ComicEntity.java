@@ -1,7 +1,9 @@
 package vn.group.data;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.SelectBeforeUpdate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -10,6 +12,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "comic")
+@DynamicUpdate( value = true)
+@SelectBeforeUpdate ( value= true)
 public class ComicEntity {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -26,12 +30,12 @@ public class ComicEntity {
     private Integer viewTotal;
     @Column(name = "status")
     private String status;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private UserEntity userEntity;
     @OneToMany( fetch = FetchType.LAZY,mappedBy = "comicEntity")
     private Set<ComicChapterEntity> comicChapterEntities;
-    @ManyToMany(fetch = FetchType.EAGER,cascade = { CascadeType.MERGE })
+    @ManyToMany(fetch = FetchType.LAZY,cascade = { CascadeType.ALL })
     @JoinTable( name = "comichavgenres", joinColumns = {@JoinColumn(name = "comicid")},
     inverseJoinColumns = {@JoinColumn(name = "comicgenresid")})
     private Set<ComicGenresEntity> comicGenresEntities;
@@ -39,9 +43,28 @@ public class ComicEntity {
     private Timestamp createdDate;
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comicEntity")
+    private List<ComicCommentEntity> comicCommentEntities;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comicEntity")
+    private List<ComicReviewEntity> comicReviewEntities;
     public UserEntity getUserEntity() {
         return userEntity;
+    }
+
+    public List<ComicCommentEntity> getComicCommentEntities() {
+        return comicCommentEntities;
+    }
+
+    public void setComicCommentEntities(List<ComicCommentEntity> comicCommentEntities) {
+        this.comicCommentEntities = comicCommentEntities;
+    }
+
+    public List<ComicReviewEntity> getComicReviewEntities() {
+        return comicReviewEntities;
+    }
+
+    public void setComicReviewEntities(List<ComicReviewEntity> comicReviewEntities) {
+        this.comicReviewEntities = comicReviewEntities;
     }
 
     public void setUserEntity(UserEntity userEntity) {

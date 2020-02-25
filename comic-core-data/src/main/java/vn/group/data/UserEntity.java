@@ -1,6 +1,7 @@
 package vn.group.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
+
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +24,10 @@ public class UserEntity {
     private String role;
     @Column(name = "createddate")
     private Timestamp createdDate;
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
+    private List<ComicCommentEntity> comicCommentEntities;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
+    private List<ComicReviewEntity> comicReviewEntities;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
     private List<ComicEntity> comicEntities;
 

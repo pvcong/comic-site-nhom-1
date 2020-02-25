@@ -19,9 +19,9 @@ import java.util.Map;
 public class ComicChapterServieImpl implements ComicChapterService {
     @Autowired
     ComicChapterDAL comicChapterDAL;
-    public void save(ComicChapterDTO comicChapterDTO, MultipartFile[] multipartFile) throws HibernateException {
+    public void save(ComicChapterDTO comicChapterDTO, MultipartFile[] multipartFile,String path) throws HibernateException {
         if(comicChapterDTO != null && multipartFile != null){
-            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage);
+            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage,path);
             if((Boolean)result[0] == false)
             {
                 comicChapterDTO.setImages( result[2].toString());
@@ -50,10 +50,10 @@ public class ComicChapterServieImpl implements ComicChapterService {
         return comicChapterDTO;
     }
 
-    public ComicChapterDTO update(ComicChapterDTO comicChapterDTO,MultipartFile[] multipartFile) {
+    public ComicChapterDTO update(ComicChapterDTO comicChapterDTO,MultipartFile[] multipartFile,String path) throws HibernateException{
         ComicChapterDTO comicChapterDTO1 = null;
         if(comicChapterDTO != null) {
-            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage);
+            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage,path);
             if ((Boolean) result[0] == false) {
                 comicChapterDTO.setImages(result[2].toString());
                 comicChapterDTO1 = ComicChapterUtils.entity2DTOFull(comicChapterDAL.update(ComicChapterUtils.DTO2EntityFull(comicChapterDTO)));
@@ -62,7 +62,7 @@ public class ComicChapterServieImpl implements ComicChapterService {
         return comicChapterDTO1;
     }
 
-    public List<ComicChapterDTO> findByproperties(Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) {
+    public List<ComicChapterDTO> findByproperties(Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) throws HibernateException {
         List<ComicChapterDTO> comicChapterDTOList = new ArrayList<ComicChapterDTO>();
         List<ComicChapterEntity> comicChapterEntities = comicChapterDAL.findByProperty(properties, sortProperties, limit, offset, whereClause);
         for(ComicChapterEntity comicChapterEntity : comicChapterEntities){

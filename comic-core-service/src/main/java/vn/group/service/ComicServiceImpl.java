@@ -5,15 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import vn.group.common.ServiceConstant;
 import vn.group.dal.ComicChapterDAL;
 import vn.group.dal.ComicDAL;
 import vn.group.data.ComicEntity;
+import vn.group.data.ComicGenresEntity;
+import vn.group.data.UserEntity;
 import vn.group.dto.ComicDTO;
+import vn.group.dto.ComicGenresDTO;
+import vn.group.utils.ComicGenresUtils;
 import vn.group.utils.ComicUtils;
+import vn.group.utils.UploadUtils;
+import vn.group.utils.UserUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 @Service
 public class ComicServiceImpl implements ComicService {
     @Autowired
@@ -25,21 +32,49 @@ public class ComicServiceImpl implements ComicService {
         List<ComicDTO> comicDTOS = new ArrayList<ComicDTO>();
         List<ComicEntity> comicEntities = comicDAL.findAll();
         for(ComicEntity comicEntity : comicEntities){
+
             ComicDTO comicDTO = ComicUtils.entity2DTO(comicEntity);
             comicDTOS.add(comicDTO);
         }
         return comicDTOS;
     }
 
-    public void save(ComicDTO comicDTO) throws HibernateException {
+    public void save(ComicDTO comicDTO, MultipartFile[] multipartFile, String path) throws HibernateException {
         if(comicDTO != null){
-            comicDAL.save(ComicUtils.DTO2Entity(comicDTO));
+            Object[] objects = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicBanner,path);
+            if((Boolean)objects[0] == false ){
+                comicDTO.setBanner(objects[2].toString());
+                ComicEntity comicEntity = ComicUtils.DTO2Entity(comicDTO);
+                Set< ComicGenresEntity > comicGenresEntities = new LinkedHashSet<ComicGenresEntity>();
+                for(ComicGenresDTO item : comicDTO.getComicGenresEntities() ){
+                    ComicGenresEntity comicGenresEntity = ComicGenresUtils.DTO2Entity(item);
+                    comicGenresEntities.add(comicGenresEntity);
+                }
+                UserEntity userEntity = UserUtils.DTO2Entity(comicDTO.getUserDTO());
+                comicEntity.setUserEntity(userEntity);
+                comicEntity.setComicGenresEntities(comicGenresEntities);
+                comicDAL.save(comicEntity);
+            }
+
         }
     }
 
-    public ComicDTO update(ComicDTO comicDTO) throws HibernateException {
-        if(comicDTO != null){
-            comicDAL.update(ComicUtils.DTO2Entity(comicDTO));
+    public ComicDTO update(ComicDTO comicDTO, MultipartFile[] multipartFile,String path) throws HibernateException {
+        if(comicDTO != null){ Object[] objects = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicBanner,path);
+            if((Boolean)objects[0] == false){
+                comicDTO.setBanner(objects[2].toString());
+                Set<ComicGenresEntity> comicGenresEntities = new LinkedHashSet<ComicGenresEntity>();
+                for(ComicGenresDTO item : comicDTO.getComicGenresEntities()){
+                    ComicGenresEntity comicGenresEntity = ComicGenresUtils.DTO2Entity(item);
+                    comicGenresEntities.add(comicGenresEntity);
+                }
+                UserEntity userEntity = UserUtils.DTO2Entity(comicDTO.getUserDTO());
+                ComicEntity comicEntity = ComicUtils.DTO2Entity(comicDTO);
+                comicEntity.setUserEntity(userEntity);
+                comicEntity.setComicGenresEntities(comicGenresEntities);
+                comicDAL.update(comicEntity);
+            }
+
         }
         return comicDTO;
     }
@@ -64,7 +99,13 @@ public class ComicServiceImpl implements ComicService {
         List<ComicDTO> comicDTOS = new ArrayList<ComicDTO>();
         List<ComicEntity> comicEntities = comicDAL.findByProperty(properties,sortProperties,limit,offset,whereClause);
         for(ComicEntity item : comicEntities){
+            Set<ComicGenresEntity> comicGenresEntity = item.getComicGenresEntities();
+            Set<ComicGenresDTO> comicGenresDTOS = new LinkedHashSet<ComicGenresDTO>();
+            for(ComicGenresEntity genresEntity : comicGenresEntity){
+                comicGenresDTOS.add(ComicGenresUtils.entity2DTO(genresEntity));
+            }
             ComicDTO comicDTO = ComicUtils.entity2DTO(item);
+            comicDTO.setComicGenresEntities(comicGenresDTOS);
             comicDTOS.add(comicDTO);
         }
         return comicDTOS;
@@ -81,7 +122,15 @@ public class ComicServiceImpl implements ComicService {
     public ComicDTO findDetaiComicUntique(Integer id) throws HibernateException{
         ComicDTO comicDTO = null;
         if(id != null){
+            ComicEntity comicEntity = comicDAL.findDetailComicUnique(id);
+            Set<ComicGenresEntity> comicGenresEntities = comicEntity.getComicGenresEntities();
+            Set<ComicGenresDTO> comicGenresDTOS = new LinkedHashSet<ComicGenresDTO>();
+            for(ComicGenresEntity item : comicGenresEntities){
+                ComicGenresDTO comicGenresDTO = ComicGenresUtils.entity2DTO(item);
+                comicGenresDTOS.add(comicGenresDTO);
+            }
             comicDTO = ComicUtils.entity2DTO(comicDAL.findDetailComicUnique(id));
+            comicDTO.setComicGenresEntities(comicGenresDTOS);
         }
         return comicDTO;
     }

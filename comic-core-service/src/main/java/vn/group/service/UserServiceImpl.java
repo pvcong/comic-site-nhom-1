@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
         return userDTO;
     }
 
-    public List<UserDTO> findByproperties(Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) {
+    public List<UserDTO> findByproperties(Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) throws HibernateException {
         List<UserEntity> userEntities = userDAL.findByProperty(properties, sortProperties, limit, offset, whereClause);
         List<UserDTO> userDTOS = new ArrayList<UserDTO>();
         for(UserEntity item : userEntities){
