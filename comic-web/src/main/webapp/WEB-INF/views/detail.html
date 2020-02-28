@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEBTOON-the official home for all things WEBTOON</title>
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
@@ -13,7 +12,9 @@
     <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
 </head>
 <body >
+
 <div id="wrap">
+
     <!--start-header-->
     <header>
         <div class="header">
@@ -54,7 +55,6 @@
             </div>
         </div>
     </header>
-
     <!--start-body-->
     <div class="body-Detail">
         <div class="body-Main-Detail">
@@ -65,7 +65,7 @@
                 <div class="body-detail-content-item">
                     <span>Romance</span>
                     <h2>Edith</h2>
-                    <a href="#">Swansgarden  <i class="fas fa-exclamation"></i></a>
+                    <a href="#" class="node" id="btn-box">Swansgarden  <i class="fas fa-exclamation"></i></a>
                 </div>
             </div>
             <div class="body-detail-icon">
@@ -222,11 +222,78 @@
     </div>
     <!--end-start-->
 </div>
+    <div class="box-both">
+        <div class="box-both-top">
+            <div class="btn_Hidden"><i class="fas fa-window-close"></i></div>
+            <h4>About the creator</h4>
+            <span>Jjolee</span>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-tumblr"></i></a>
+            <a href="#"><i class="fab fa-reddit-alien"></i></a>
+            <a href="#"><i class="fas fa-copy"></i></a>
+            <a href="#"><i class="fas fa-wifi"></i></a>
+            <p>jjolee is trying her best</p>
+        </div>
+        <div class="box-both-bottom">
+            <h4>Work</h4>
+            <div class="box-both-bottom-list">
+                <a href="#">
+                    <div class="box-both-bottom-item">
+                        <img src="upload/10_EC8DB8EB84A4EC9DBC_ipad%20(4).jpg" width="100%" height="100%" alt="">
+                        <div class="box-both-bottom-item-content">
+                            <p>Lost in Translation</p>
+                            <span>Drama</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="box-both-bottom-item">
+                        <img src="upload/10_EC8DB8EB84A4EC9DBC_ipad%20(4).jpg" width="100%" height="100%" alt="">
+                        <div class="box-both-bottom-item-content">
+                            <p>Lost in Translation</p>
+                            <span>Drama</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="box-both-bottom-item">
+                        <img src="upload/10_EC8DB8EB84A4EC9DBC_ipad%20(4).jpg" width="100%" height="100%" alt="">
+                        <div class="box-both-bottom-item-content">
+                            <p>Lost in Translation</p>
+                            <span>Drama</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+<div class="white-both ">
+
+</div>
 </body>
 <script
         src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
 <script src="lib/bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
-<script src="Js/Jquery.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var node = document.querySelectorAll('.node');
+        var box_both = document.querySelector('.box-both');
+        var white_Show = document.querySelector('.white-both');
+                for ( var i = 0; i < node.length; i ++) {
+                    node[i].addEventListener("click", function () {
+                    white_Show.classList.add('white-Show');
+                    box_both.classList.add('box-Show')
+                    })
+                }
+        var btn_Hidden = document.querySelector('.btn_Hidden');
+                btn_Hidden.addEventListener("click", function () {
+                    white_Show.classList.remove('white-Show');
+                    box_both.classList.remove('box-Show')
+                })
+                
+    }, false)
+</script>
 </html>
