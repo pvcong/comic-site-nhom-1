@@ -4,14 +4,20 @@ import com.google.protobuf.Api;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static sun.misc.Signal.handle;
 
 @ControllerAdvice
 public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -25,6 +31,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         apiError.setHttpStatus(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getHttpStatus());
     }
+
     @ExceptionHandler(ExecDatabaseException.class)
     public ResponseEntity<Object> srpingHandlerExecDatabase(ExecDatabaseException e){
         ApiError apiError = new ApiError();
@@ -33,7 +40,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         errors.add(e.getMessage());
         apiError.setErrors(errors);
         apiError.setMessage("An error occurred");
-        apiError.setHttpStatus(HttpStatus.BAD_REQUEST);
+        apiError.setHttpStatus(BAD_REQUEST);
         return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getHttpStatus());
     }
 }

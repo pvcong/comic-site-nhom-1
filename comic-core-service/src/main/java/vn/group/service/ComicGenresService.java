@@ -11,6 +11,7 @@ public interface ComicGenresService {
     ComicGenresDTO update(ComicGenresDTO comicGenresDTO);
     void delete(List<ComicGenresDTO> comicGenresDTOS);
     ComicGenresDTO findById(Integer id);
-    List<ComicGenresDTO> findByproperties(Map<String,String> properties, Map<String,String> sortProperties, Integer limit, Integer offset, String whereClause );
+    Object[] findByproperties(List<String> joinTables,Map<String,String> properties, Map<String,String> sortProperties, Integer limit, Integer offset, String whereClause );
     ComicGenresDTO findByPropertyUnique(String property, Object propertyValue);
+    Object[] findComicsOfGenres(List<String> joinTables,Map<String,String> properties, Map<String,String> sortProperties, Integer limit, Integer offset, String whereClause );
 }

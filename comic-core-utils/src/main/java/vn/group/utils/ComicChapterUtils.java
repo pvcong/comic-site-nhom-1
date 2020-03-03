@@ -12,6 +12,7 @@ public class ComicChapterUtils {
             comicChapterDTO.setName(comicChapterEntity.getName());
             comicChapterDTO.setCreatedDate(comicChapterEntity.getCreatedDate());
             comicChapterDTO.setImages(comicChapterEntity.getImages());
+            //comicChapterDTO.setComicDTO(comicChapterEntity.getComicEntity());
             //comicChapterDTO.setComicDTO(ComicUtils.entity2DTOUsedComicChapter(comicChapterEntity.getComicEntity()));
         }
         return comicChapterDTO;

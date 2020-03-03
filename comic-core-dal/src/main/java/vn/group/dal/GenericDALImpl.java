@@ -120,14 +120,20 @@ public class GenericDALImpl<ID extends Serializable, T> implements GenericDAL<ID
         }
         return result;
     }
-    public List<T> findByProperty(Map<String,String> properties,Map<String,String> sortProperties,Integer limit,Integer offset,String whereClause){
+    public Object[] findByProperty(List<String> joinTables,Map<String,String> properties,Map<String,String> sortProperties,Integer limit,Integer offset,String whereClause){
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        StringBuilder sqlQuery = new StringBuilder("FROM ").append(persistenceClass.getSimpleName())
-                .append(" WHERE 1=1");
+       Transaction transaction = session.beginTransaction();
+        StringBuilder sqlQuery = new StringBuilder("FROM ").append(persistenceClass.getSimpleName());
+        if(joinTables != null){
+            sqlQuery.append(" cc");
+            for(String item : joinTables){
+                sqlQuery.append(" LEFT JOIN FETCH ").append(item);
+            }
+        }
+        sqlQuery.append(" WHERE 1=1");
         if(properties != null){
             for(Map.Entry<String,String> item : properties.entrySet()){
-                sqlQuery.append(" AND LOWER(").append(item.getKey()).append(") LIKE '%' || :").append(item.getKey()).append(" || '%' ");
+                sqlQuery.append(" AND LOWER(").append(item.getKey()).append(")= LOWER(:").append(item.getKey().replace(".","1")).append(") ");
             }
 
         }
@@ -154,19 +160,41 @@ public class GenericDALImpl<ID extends Serializable, T> implements GenericDAL<ID
         if(offset !=null){
             query.setFirstResult(offset);
         }
+        StringBuilder stringQueryCount = new StringBuilder("SELECT COUNT(*) FROM ").append(persistenceClass.getSimpleName());
+        if(joinTables != null){
+            stringQueryCount.append(" cc");
+            for(String item : joinTables){
+                stringQueryCount.append(" JOIN ").append(item);
+            }
+        }
+        stringQueryCount.append(" WHERE 1=1");
+        if(properties != null){
+            for(Map.Entry<String,String> item : properties.entrySet()){
+                stringQueryCount.append(" AND LOWER(").append(item.getKey()).append(")= LOWER(:").append(item.getKey().replace(".","1")).append(") ");
+             }
+        }
+        Query query2 = session.createQuery(stringQueryCount.toString());
         if(properties !=null){
             for(Map.Entry<String,String> item : properties.entrySet()){
-                query.setParameter(item.getKey(),item.getValue());
+                query.setParameter(item.getKey().replace(".","1"),item.getValue());
+                query2.setParameter(item.getKey().replace(".","1"),item.getValue());
             }
         }
 //        if(sortProperties != null){
 //            for(Map.Entry<String,String> item : sortProperties.entrySet()){
-//                query.setParameter(item.getKey(),item.getKey());
+//                query.setParameter(item.getKey().replace(""),item.getKey());
 //            }
 //        }
 
+
+
+        Object countSize = 0;
         List<T> result = new ArrayList<T>();
         try {
+            countSize = query2.list().get(0).toString();
+            if(limit != 0)
+            countSize = String.format("%.0f",Math.ceil(Double.parseDouble(countSize.toString())/limit));
+
             result = query.list();
             transaction.commit();
         } catch (HibernateException e){
@@ -178,12 +206,13 @@ public class GenericDALImpl<ID extends Serializable, T> implements GenericDAL<ID
             session.close();
         }
 
-        return result;
+        return new Object[]{countSize,result};
     }
 
     public T findByPropertyUnique(String property, Object propertyValue) {
         StringBuilder sqlQuery = new StringBuilder("FROM ").append(persistenceClass.getSimpleName())
                 .append(" WHERE 1=1");
+
         if(!StringUtils.isEmpty(property) && !StringUtils.isEmpty(propertyValue)){
             sqlQuery.append(" AND ").append(property).append(" = ").append(" :propertyValue");
         }

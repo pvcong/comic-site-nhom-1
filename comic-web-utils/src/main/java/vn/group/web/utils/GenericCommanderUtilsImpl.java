@@ -1,8 +1,8 @@
-package vn.learn.web.utils;
+package vn.group.web.utils;
 
 import org.springframework.stereotype.Component;
-import vn.group.dto.UserDTO;
 
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -15,11 +15,19 @@ public class GenericCommanderUtilsImpl<T> implements GenericCommanderUtils<T>{
     private String sortProperty;
     private String sortValue;
     private Map<String,String> properties;
-    private Integer page = 0;
+    private Integer page = 1;
     private T objectDTO;
-
+    private List<String> joinTables;
     public T getObjectDTO() {
         return objectDTO;
+    }
+
+    public List<String> getJoinTables() {
+        return joinTables;
+    }
+
+    public void setJoinTables(List<String> joinTables) {
+        this.joinTables = joinTables;
     }
 
     public void setObjectDTO(T objectDTO) {

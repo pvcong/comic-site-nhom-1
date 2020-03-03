@@ -4,13 +4,13 @@ import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import vn.group.common.ServiceConstant;
 import vn.group.dal.ComicChapterDAL;
 import vn.group.data.ComicChapterEntity;
+import vn.group.data.ComicEntity;
 import vn.group.dto.ComicChapterDTO;
+import vn.group.dto.ComicDTO;
 import vn.group.utils.ComicChapterUtils;
-import vn.group.utils.UploadUtils;
-import vn.group.utils.UserUtils;
+import vn.group.utils.ComicUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +19,12 @@ import java.util.Map;
 public class ComicChapterServieImpl implements ComicChapterService {
     @Autowired
     ComicChapterDAL comicChapterDAL;
-    public void save(ComicChapterDTO comicChapterDTO, MultipartFile[] multipartFile,String path) throws HibernateException {
-        if(comicChapterDTO != null && multipartFile != null){
-            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage,path);
-            if((Boolean)result[0] == false)
-            {
-                comicChapterDTO.setImages( result[2].toString());
-                comicChapterDAL.save(ComicChapterUtils.DTO2EntityFull(comicChapterDTO));
-            }
+    public void save(ComicChapterDTO comicChapterDTO) throws HibernateException {
+            if(comicChapterDTO != null)
+            comicChapterDAL.save(ComicChapterUtils.DTO2EntityFull(comicChapterDTO));
 
         }
-    }
+
 
     public void delete(List<ComicChapterDTO> comicChapterDTOList) throws HibernateException {
         if(comicChapterDTOList != null){
@@ -45,31 +40,35 @@ public class ComicChapterServieImpl implements ComicChapterService {
     public ComicChapterDTO findById(Integer id) throws HibernateException {
         ComicChapterDTO comicChapterDTO = null;
         if(id != null){
-            comicChapterDTO = ComicChapterUtils.entity2DTOFull(comicChapterDAL.findById(id));
+            ComicChapterEntity comicChapterEntity = comicChapterDAL.findById(id);
+
+            if(comicChapterEntity != null){
+                ComicEntity comicEntity = new ComicEntity();
+                if(comicChapterEntity.getComicEntity()!= null)
+                    comicEntity.setComicId( comicChapterEntity.getComicEntity().getComicId());
+                ComicDTO comicDTO = ComicUtils.entity2DTO(comicEntity);
+                comicChapterDTO = ComicChapterUtils.entity2DTO(comicChapterEntity);
+                comicChapterDTO.setComicDTO(comicDTO);
+            }
         }
         return comicChapterDTO;
     }
 
-    public ComicChapterDTO update(ComicChapterDTO comicChapterDTO,MultipartFile[] multipartFile,String path) throws HibernateException{
-        ComicChapterDTO comicChapterDTO1 = null;
-        if(comicChapterDTO != null) {
-            Object[] result = UploadUtils.uploadFile(multipartFile, ServiceConstant.locationComicChapterImage,path);
-            if ((Boolean) result[0] == false) {
-                comicChapterDTO.setImages(result[2].toString());
-                comicChapterDTO1 = ComicChapterUtils.entity2DTOFull(comicChapterDAL.update(ComicChapterUtils.DTO2EntityFull(comicChapterDTO)));
-            }
-        }
-        return comicChapterDTO1;
+    public ComicChapterDTO update(ComicChapterDTO comicChapterDTO) throws HibernateException{
+        if(comicChapterDTO != null)
+        comicChapterDTO = ComicChapterUtils.entity2DTOFull(comicChapterDAL.update(ComicChapterUtils.DTO2EntityFull(comicChapterDTO)));
+        return comicChapterDTO;
     }
 
-    public List<ComicChapterDTO> findByproperties(Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) throws HibernateException {
+    public Object[] findByproperties(List<String> joinTables,Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) throws HibernateException {
         List<ComicChapterDTO> comicChapterDTOList = new ArrayList<ComicChapterDTO>();
-        List<ComicChapterEntity> comicChapterEntities = comicChapterDAL.findByProperty(properties, sortProperties, limit, offset, whereClause);
-        for(ComicChapterEntity comicChapterEntity : comicChapterEntities){
+        Object[] objects = comicChapterDAL.findByProperty(joinTables,properties, sortProperties, limit, offset, whereClause);
+        List<ComicChapterEntity> comicChapterEntities = (List<ComicChapterEntity>) objects[1];
+         for(ComicChapterEntity comicChapterEntity : comicChapterEntities){
             ComicChapterDTO comicChapterDTO = ComicChapterUtils.entity2DTO(comicChapterEntity);
             comicChapterDTOList.add(comicChapterDTO);
         }
 
-        return comicChapterDTOList;
+        return new Object[]{objects[0],comicChapterDTOList};
     }
 }

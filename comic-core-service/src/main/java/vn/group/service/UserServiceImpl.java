@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import vn.group.dal.UserDAL;
 import vn.group.dal.UserDALImpl;
 import vn.group.data.UserEntity;
@@ -67,13 +68,14 @@ public class UserServiceImpl implements UserService {
         return userDTO;
     }
 
-    public List<UserDTO> findByproperties(Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) throws HibernateException {
-        List<UserEntity> userEntities = userDAL.findByProperty(properties, sortProperties, limit, offset, whereClause);
-        List<UserDTO> userDTOS = new ArrayList<UserDTO>();
+    public Object[] findByproperties(List<String> joinTables,Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) throws HibernateException {
+        Object[] objects = userDAL.findByProperty(joinTables,properties, sortProperties, limit, offset, whereClause);
+        List<UserEntity> userEntities = (List<UserEntity>) objects[1];
+         List<UserDTO> userDTOS = new ArrayList<UserDTO>();
         for(UserEntity item : userEntities){
             userDTOS.add(UserUtils.entity2DTO(item));
         }
-        return userDTOS;
+        return new Object[]{objects[0],userDTOS};
     }
     public UserDTO findByPropertyUnique(String property, Object propertyValue) throws HibernateException{
         UserDTO userDTO = null;
@@ -82,5 +84,23 @@ public class UserServiceImpl implements UserService {
             userDTO = UserUtils.entity2DTO(userEntity);
         }
         return userDTO;
+    }
+    public Object[] checkLogin(String username, String password){
+        Object[] objects = null;
+        if(!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)){
+            objects = userDAL.findUserNameAndPassword(username,password);
+        }
+        return objects;
+    }
+
+    public Object checkExits(String username) {
+        Object object = false;
+        if(!StringUtils.isEmpty(username)){
+            UserEntity userEntity = userDAL.findByPropertyUnique("userName",username);
+            if(userEntity != null){
+                object = true;
+            }
+        }
+        return object;
     }
 }

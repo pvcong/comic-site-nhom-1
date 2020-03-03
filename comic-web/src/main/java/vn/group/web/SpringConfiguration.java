@@ -15,12 +15,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.HttpPutFormContentFilter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -31,15 +30,21 @@ import java.util.Properties;
 @ComponentScan (basePackages={"vn.group"})
 @PropertySource(value = {"classpath:db.properties"})
 public class SpringConfiguration extends WebMvcConfigurerAdapter {
-    @Bean
-    public ViewResolver viewResolver(){
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/views/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }
+//    @Bean
+//    public ViewResolver viewResolver(){
+//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+//        viewResolver.setViewClass(JstlView.class);
+//        viewResolver.setPrefix("/WEB-INF/views/");
+//        viewResolver.setSuffix(".jsp");
+//        return viewResolver;
+//    }
+
     @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("*")
+                .allowedHeaders("*");
+    }
+
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
@@ -85,7 +90,7 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter {
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(1000000);
+        multipartResolver.setMaxUploadSize(10000000);
         return multipartResolver;
     }
     @Bean
@@ -93,6 +98,17 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter {
         HttpPutFormContentFilter httpPutFormContentFilter = new HttpPutFormContentFilter();
         return httpPutFormContentFilter;
     }
-
+    @Bean
+    public TilesConfigurer tilesConfigurer(){
+        TilesConfigurer configurer = new TilesConfigurer();
+        configurer.setDefinitions("classpath:tiles.xml");
+        configurer.setCheckRefresh(true);
+        return configurer;
+    }
+    @Bean
+    public ViewResolver viewResolver(){
+        TilesViewResolver viewResolver = new TilesViewResolver();
+        return viewResolver;
+    }
 
 }

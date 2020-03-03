@@ -28,6 +28,14 @@ public class ComicGenresDTO {
         this.comicEntities = comicEntities;
     }
 
+    public List<ComicDTO> getComicEntities() {
+        return comicEntities;
+    }
+
+    public void setComicEntities(List<ComicDTO> comicEntities) {
+        this.comicEntities = comicEntities;
+    }
+
     public Integer getComicGenresId() {
         return comicGenresId;
     }

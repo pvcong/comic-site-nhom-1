@@ -17,7 +17,7 @@ public class ComicUtils {
         if(comicEntity != null){
             comicDTO.setComicId(comicEntity.getComicId());
             comicDTO.setName(comicEntity.getName());
-
+            comicDTO.setAvatar(comicEntity.getAvatar());
             comicDTO.setStatus(comicEntity.getStatus());
             comicDTO.setAuthor(comicEntity.getAuthor());
             comicDTO.setViewTotal(comicEntity.getViewTotal());
@@ -42,7 +42,7 @@ public class ComicUtils {
             comicEntity.setComicId(comicDTO.getComicId());
             comicEntity.setName(comicDTO.getName());
             comicEntity.setStatus(comicDTO.getStatus());
-
+            comicEntity.setAvatar(comicDTO.getAvatar());
             comicEntity.setAuthor(comicDTO.getAuthor());
             comicEntity.setViewTotal(comicDTO.getViewTotal());
             comicEntity.setBanner(comicDTO.getBanner());

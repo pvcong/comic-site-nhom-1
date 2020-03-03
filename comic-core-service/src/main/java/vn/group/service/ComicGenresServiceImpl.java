@@ -4,11 +4,17 @@ import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import vn.group.dal.ComicDAL;
 import vn.group.dal.ComicGenresDAL;
+import vn.group.data.ComicEntity;
 import vn.group.data.ComicGenresEntity;
+import vn.group.dto.ComicDTO;
 import vn.group.dto.ComicGenresDTO;
+import vn.group.dto.UserDTO;
 import vn.group.utils.ComicGenresUtils;
+import vn.group.utils.ComicUtils;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +22,8 @@ import java.util.Map;
 public class ComicGenresServiceImpl implements ComicGenresService {
     @Autowired
     ComicGenresDAL comicGenresDAL;
+    @Autowired
+    ComicDAL comicDAL;
     public List<ComicGenresDTO> findAll() throws HibernateException {
         List<ComicGenresDTO> comicGenresDTOList = new ArrayList<ComicGenresDTO>();
         List<ComicGenresEntity> comicGenresEntityList = comicGenresDAL.findAll();
@@ -28,6 +36,9 @@ public class ComicGenresServiceImpl implements ComicGenresService {
 
     public void save(ComicGenresDTO comicGenresDTO) throws HibernateException {
         if(comicGenresDTO != null){
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            comicGenresDTO.setCreatedDate(timestamp);
+            comicGenresDTO.setModifiedDate(timestamp);
             ComicGenresEntity comicGenresEntity = ComicGenresUtils.DTO2Entity(comicGenresDTO);
             comicGenresDAL.save(comicGenresEntity);
         }
@@ -36,6 +47,8 @@ public class ComicGenresServiceImpl implements ComicGenresService {
     public ComicGenresDTO update(ComicGenresDTO comicGenresDTO) throws HibernateException {
         ComicGenresDTO result = null;
         if(comicGenresDTO != null){
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            comicGenresDTO.setModifiedDate(timestamp);
             ComicGenresEntity comicGenresEntity = comicGenresDAL.update(ComicGenresUtils.DTO2Entity(comicGenresDTO));
             result = ComicGenresUtils.entity2DTO(comicGenresEntity);
         }
@@ -56,19 +69,21 @@ public class ComicGenresServiceImpl implements ComicGenresService {
     public ComicGenresDTO findById(Integer id) throws HibernateException {
         ComicGenresDTO comicGenresDTO = null;
         if(id != null){
-            comicGenresDTO = ComicGenresUtils.entity2DTO(comicGenresDAL.findById(id));
+            ComicGenresEntity comicGenresEntity = comicGenresDAL.findById(id);
+            comicGenresDTO = ComicGenresUtils.entity2DTO(comicGenresEntity);
         }
         return comicGenresDTO;
     }
 
-    public List<ComicGenresDTO> findByproperties(Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) throws HibernateException{
+    public Object[] findByproperties(List<String> joinTables,Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) throws HibernateException{
         List<ComicGenresDTO> comicGenresDTOList = new ArrayList<ComicGenresDTO>();
-        List<ComicGenresEntity> comicGenresEntityList = comicGenresDAL.findByProperty(properties, sortProperties, limit, offset, whereClause);
+        Object[] objects = comicGenresDAL.findByProperty(joinTables,properties, sortProperties, limit, offset, whereClause);
+        List<ComicGenresEntity> comicGenresEntityList = (List<ComicGenresEntity>) objects[1];
         for(ComicGenresEntity item : comicGenresEntityList){
             ComicGenresDTO comicGenresDTO = ComicGenresUtils.entity2DTO(item);
             comicGenresDTOList.add(comicGenresDTO);
         }
-        return comicGenresDTOList;
+        return new Object[]{objects[0],comicGenresDTOList};
     }
 
     public ComicGenresDTO findByPropertyUnique(String property, Object propertyValue) throws HibernateException {
@@ -77,5 +92,26 @@ public class ComicGenresServiceImpl implements ComicGenresService {
            comicGenresDTO = ComicGenresUtils.entity2DTO(comicGenresDAL.findByPropertyUnique(property,propertyValue));
         }
         return comicGenresDTO;
+    }
+
+    public Object[] findComicsOfGenres(List<String> joinTables, Map<String, String> properties, Map<String, String> sortProperties, Integer limit, Integer offset, String whereClause) {
+        ComicGenresDTO comicGenresDTO = null;
+        Object[] objects = comicDAL.findByProperty(joinTables,properties, sortProperties, limit, offset, whereClause);
+        Integer genresId = null;
+        for(Map.Entry<String,String> item :  properties.entrySet()){
+            genresId = Integer.parseInt(item.getValue());
+        }
+        ComicGenresEntity comicGenresEntity = comicGenresDAL.findById(genresId);
+        List<ComicEntity> comicEntities = (List<ComicEntity>) objects[1];
+        List<ComicDTO> comicDTOS = new ArrayList<ComicDTO>();
+        for(ComicEntity item : comicEntities){
+                ComicDTO comicDTO = ComicUtils.entity2DTO(item);
+                comicDTOS.add(comicDTO);
+            }
+        comicGenresDTO = ComicGenresUtils.entity2DTO(comicGenresEntity);
+        comicGenresDTO.setComicEntities(comicDTOS);
+
+
+        return new Object[]{objects[0],comicGenresDTO};
     }
 }

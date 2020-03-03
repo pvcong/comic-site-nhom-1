@@ -24,6 +24,7 @@ public class ComicDTO {
 
     private UserDTO userDTO;
 
+    private String avatar;
     private Set<ComicChapterDTO> comicChapterEntities;
 
     private Set<ComicGenresDTO> comicGenresEntities;
@@ -31,11 +32,15 @@ public class ComicDTO {
     private Timestamp createdDate;
 
     private Timestamp modifiedDate;
+    private List<WeekdaysDTO> weekdaysEntities;
 
+    private List<ComicCommentDTO> comicCommentEntities;
+
+    private List<ComicReviewDTO> comicReviewEntities;
     public ComicDTO() {
     }
 
-    public ComicDTO(Integer comicId, String name, String description, String author, String banner, Integer viewTotal, String status, UserDTO userDTO, Set<ComicChapterDTO> comicChapterEntities, Set<ComicGenresDTO> comicGenresEntities, Timestamp createdDate, Timestamp modifiedDate) {
+    public ComicDTO(Integer comicId, String name, String description, String author, String banner, Integer viewTotal, String status, UserDTO userDTO, String avatar, Set<ComicChapterDTO> comicChapterEntities, Set<ComicGenresDTO> comicGenresEntities, Timestamp createdDate, Timestamp modifiedDate, List<WeekdaysDTO> weekdaysEntities, List<ComicCommentDTO> comicCommentEntities, List<ComicReviewDTO> comicReviewEntities) {
         this.comicId = comicId;
         this.name = name;
         this.description = description;
@@ -44,10 +49,46 @@ public class ComicDTO {
         this.viewTotal = viewTotal;
         this.status = status;
         this.userDTO = userDTO;
+        this.avatar = avatar;
         this.comicChapterEntities = comicChapterEntities;
         this.comicGenresEntities = comicGenresEntities;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
+        this.weekdaysEntities = weekdaysEntities;
+        this.comicCommentEntities = comicCommentEntities;
+        this.comicReviewEntities = comicReviewEntities;
+    }
+
+    public List<ComicCommentDTO> getComicCommentEntities() {
+        return comicCommentEntities;
+    }
+
+    public void setComicCommentEntities(List<ComicCommentDTO> comicCommentEntities) {
+        this.comicCommentEntities = comicCommentEntities;
+    }
+
+    public List<ComicReviewDTO> getComicReviewEntities() {
+        return comicReviewEntities;
+    }
+
+    public void setComicReviewEntities(List<ComicReviewDTO> comicReviewEntities) {
+        this.comicReviewEntities = comicReviewEntities;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public List<WeekdaysDTO> getWeekdaysEntities() {
+        return weekdaysEntities;
+    }
+
+    public void setWeekdaysEntities(List<WeekdaysDTO> weekdaysEntities) {
+        this.weekdaysEntities = weekdaysEntities;
     }
 
     public Set<ComicChapterDTO> getComicChapterEntities() {

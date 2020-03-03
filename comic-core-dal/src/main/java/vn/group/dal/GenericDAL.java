@@ -10,6 +10,7 @@ public interface GenericDAL<ID extends Serializable,T> {
      void delete(List<T> listEntity);
      T update(T entity);
      T findById(ID id);
-     List<T> findByProperty(Map<String,String> properties,Map<String,String> sortProperties,Integer limit, Integer offset, String whereclause);
+     Object[] findByProperty(List<String> joinTables,Map<String,String> properties,Map<String,String> sortProperties,Integer limit, Integer offset, String whereclause);
      T findByPropertyUnique(String property,Object propertyValue);
+
 }

@@ -12,14 +12,15 @@ import java.util.Set;
 
 @Entity
 @Table(name = "comic")
-@DynamicUpdate( value = true)
-@SelectBeforeUpdate ( value= true)
+
 public class ComicEntity {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Integer comicId;
     @Column( name = "name")
     private String name;
+    @Column(name = "avatar")
+    private String avatar;
     @Column(name = "description")
     private String description;
     @Column(name = "author")
@@ -33,22 +34,43 @@ public class ComicEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private UserEntity userEntity;
-    @OneToMany( fetch = FetchType.LAZY,mappedBy = "comicEntity")
+    @OneToMany( fetch = FetchType.LAZY,mappedBy = "comicEntity",cascade = CascadeType.ALL)
     private Set<ComicChapterEntity> comicChapterEntities;
-    @ManyToMany(fetch = FetchType.LAZY,cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable( name = "comichavgenres", joinColumns = {@JoinColumn(name = "comicid")},
     inverseJoinColumns = {@JoinColumn(name = "comicgenresid")})
     private Set<ComicGenresEntity> comicGenresEntities;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "comichavweekdays", joinColumns = {@JoinColumn(name = "comicid")},
+    inverseJoinColumns = {@JoinColumn(name = "weekdaysid")})
+    private List<WeekdaysEntity> weekdaysEntities;
     @Column(name = "createddate")
     private Timestamp createdDate;
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comicEntity")
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comicEntity", cascade = CascadeType.ALL)
     private List<ComicCommentEntity> comicCommentEntities;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comicEntity")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comicEntity", cascade = CascadeType.ALL)
     private List<ComicReviewEntity> comicReviewEntities;
     public UserEntity getUserEntity() {
         return userEntity;
+    }
+
+    public List<WeekdaysEntity> getWeekdaysEntities() {
+        return weekdaysEntities;
+    }
+
+    public void setWeekdaysEntities(List<WeekdaysEntity> weekdaysEntities) {
+        this.weekdaysEntities = weekdaysEntities;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public List<ComicCommentEntity> getComicCommentEntities() {

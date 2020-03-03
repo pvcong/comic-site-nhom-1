@@ -11,6 +11,8 @@ public interface UserService {
     UserDTO update(UserDTO userDTO);
     void delete(List<UserDTO> userDTOS);
     UserDTO findById(Integer id);
-    List<UserDTO> findByproperties(Map<String,String> properties, Map<String,String> sortProperties, Integer limit, Integer offset, String whereClause );
+    Object[] findByproperties(List<String> joinTables,Map<String,String> properties, Map<String,String> sortProperties, Integer limit, Integer offset, String whereClause );
      UserDTO findByPropertyUnique(String property, Object propertyValue);
+    Object[] checkLogin(String username, String password);
+    Object checkExits(String username);
 }
