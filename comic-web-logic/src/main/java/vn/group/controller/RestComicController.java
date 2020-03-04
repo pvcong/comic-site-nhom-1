@@ -100,6 +100,7 @@ public class RestComicController {
         propertiesMap.put("ce.comicId",id.toString());
         List<String> joinTable = new ArrayList<String>();
         joinTable.add("cc.comicEntity ce");
+        joinTable.add("cc.userEntity ue");
         comicCommanderUtils.setSortValue("DESC");
         setupSortAndProperty(comicCommanderUtils);
         try {

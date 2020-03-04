@@ -193,7 +193,10 @@ public class ComicServiceImpl implements ComicService {
         List<ComicCommentEntity> comicCommentEntities = (List<ComicCommentEntity>) resultChapter[1];
         List<ComicCommentDTO> comicCommentDTOS = new ArrayList<ComicCommentDTO>();
         for(ComicCommentEntity item : comicCommentEntities ){
-            comicCommentDTOS.add(ComicCommentUtils.entity2DTO(item));
+            UserDTO userDTO = UserUtils.entity2DTO(item.getUserEntity());
+            ComicCommentDTO comicCommentDTO = ComicCommentUtils.entity2DTO(item);
+            comicCommentDTO.setUserDTO(userDTO);
+            comicCommentDTOS.add(comicCommentDTO);
         }
         ComicDTO comicDTO = ComicUtils.entity2DTO(resultComic);
         comicDTO.setComicCommentEntities(comicCommentDTOS);
