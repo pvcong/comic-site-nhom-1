@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>WEBTOON-the official home for all things WEBTOON</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
+
+</head>
+
+<body>
+    <div class="header">
+        <div class="heeader_inner">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="logo">
+                                <a href="./index.html"><img
+                                        src="https://upload.wikimedia.org/wikipedia/commons/0/09/Naver_Line_Webtoon_logo.png"
+                                        alt="" width="87px" height="84px" /></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-10">
+                            <ul class="lnb">
+                                <li><a href="./originals.html">Originals</a></li>
+                                <li><a href="./fixx/genre.index.html">Genres</a></li>
+                                <li><a href="./fixx/Popular.html">Popular</a></li>
+                                <li><a href="./canvas.html">Canavas</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="lk_creators">
+                        <div class="sta">
+                            <span class="fa fa-book"></span>
+                            <a href>Creators 101</a>
+                            <span> | </span>
+                            <a href class="publish">Publish</a>
+                            <a href class="login">Login</a>
+                            <span> | </span>
+                            <span class="fa fa-search"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main_banner_wrap" id="mainBannerList">
+        <div class="main_banner_inner">
+            <div class="main_banner_big _largeBannerArea">
+                <div class="slideshow-container">
+                    <div class="mySlides fade">
+                        <img src="./upload/img/banner/Ghost-Theater-Desktop-Banner.png" alt="" />
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="./upload/img/banner/Gosu-Desktop-Banner.png" />
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="./upload/img/banner/Purple-Hyacinth-Desktop-Banner4.png" />
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="./upload/img/banner/The-Wrath-26-The-Dawn-Desktop-Banner-3.png" />
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="./upload/img/banner/City-of-Blank-Desktop-Banner1.1.gif" />
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="./upload/img/banner/Cursed-Princess-Club-Desktop-Banner6.png" />
+                    </div>
+                </div>
+                <br />
+                <div class="dot_inner" style=" text-align:center">
+                    <span class="dot" onclick="currentSlide(0)"></span>
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                </div>
+                <script>
+                    function showSlides() {
+                        var i;
+                        var slides = document.getElementsByClassName("mySlides");
+                        var dots = document.getElementsByClassName("dot");
+                        for (i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";
+                        }
+                        for (i = 0; i < dots.length; i++) {
+                            dots[i].className = dots[i].className.replace(" active", "");
+                        }
+
+                        slides[slideIndex].style.display = "block";
+                        dots[slideIndex].className += " active";
+                        slideIndex++;
+
+                        if (slideIndex > slides.length - 1) {
+                            slideIndex = 0
+                        }
+
+                        setTimeout(showSlides, 3000);
+                    }
+
+                    showSlides(slideIndex = 0);
+                    function currentSlide(n) {
+                        showSlides(slideIndex = n);
+                    }
+                </script>
+            </div>
+            <div class="banner_samll">
+                <div class="banner_samll1">
+                    <div class="slider">
+                        <img src="./upload/img/banner/PC_top.png" alt="">
+                    </div>
+                </div>
+                <div class="banner_small2">
+                    <img src="./upload/img/banner/PC_bottom_180413.png  " alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="daily_tab_wrap">
+        <ul class="daily_tab">
+            <li class="btn_daily"><a>MON</a></li>
+            <li class="btn_daily"><a>TUE</a></li>
+            <li class="btn_daily"><a>WED</a></li>
+            <li class="btn_daily"><a>THU</a></li>
+            <li class="btn_daily"><a>FRI</a></li>
+            <li class="btn_daily"><a>SAT</a></li>
+            <li class="btn_daily"><a>SUN</a></li>
+            <li class="btn_daily"><a>|</a></li>
+            <li class="btn_daily"><a style="color: #838383; margin-left:-30px">MORE</a></li>
+        </ul>
+    </div>
+
+    <div class="wrap">
+        <div class="card_flipper">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="card_item">
+                        <div class="card_lst">
+                            <img src="./upload/img/product01.jpg" alt="" style="width:210px; height:210px"></img>
+
+                        </div>
+                        <div class="card_front">
+                            <h5>Subhero</h5>
+                            <span class="fa fa-heart"> <a class="num">7M</a></span>
+                        </div>
+                        <span class="genre g_romance">Action</span>
+                    </div>
+                    <div class="card_back g_romance">
+                        <div class="info">
+                            <h3 class="subj">Subhero</h3>
+                            <p class="author">June</p>
+                            <p class="line"></p>
+                            <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                answer is the unthinkable: ...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card_item">
+                        <div class="card_lst">
+                            <img src="./upload/img/product02.jpg" alt="" style="width:210px; height:210px"></img>
+
+                        </div>
+                        <div class="card_front">
+                            <h5>Subhero</h5>
+                            <span class="fa fa-heart"> <a class="num">7M</a></span>
+                        </div>
+                        <span class="genre g_romance">Action</span>
+                    </div>
+                    <div class="card_back g_romance">
+                        <div class="info">
+                            <h3 class="subj">Subhero</h3>
+                            <p class="author">June</p>
+                            <p class="line"></p>
+                            <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                answer is the unthinkable: ...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card_item">
+                        <div class="card_lst">
+                            <img src="./upload/img/product03.jpg" alt="" style="width:210px; height:210px"></img>
+
+                        </div>
+                        <div class="card_front">
+                            <h5>Subhero</h5>
+                            <span class="fa fa-heart"> <a class="num">7M</a></span>
+                        </div>
+                        <span class="genre g_romance">Action</span>
+                    </div>
+                    <div class="card_back g_romance">
+                        <div class="info">
+                            <h3 class="subj">Subhero</h3>
+                            <p class="author">June</p>
+                            <p class="line"></p>
+                            <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                answer is the unthinkable: ...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card_item">
+                        <div class="card_lst">
+                            <img src="./upload/img/product04.jpg" alt="" style="width:210px; height:210px"></img>
+
+                        </div>
+                        <div class="card_front">
+                            <h5>Subhero</h5>
+                            <span class="fa fa-heart"> <a class="num">7M</a></span>
+                        </div>
+                        <span class="genre g_romance">Action</span>
+                    </div>
+                    <div class="card_back g_romance">
+                        <div class="info">
+                            <h3 class="subj">Subhero</h3>
+                            <p class="author">June</p>
+                            <p class="line"></p>
+                            <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                answer is the unthinkable: ...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card_item">
+                        <div class="card_lst">
+                            <img src="./upload/img/product05.jpg" alt="" style="width:210px; height:210px"></img>
+
+                        </div>
+                        <div class="card_front">
+                            <h5>Subhero</h5>
+                            <span class="fa fa-heart"> <a class="num">7M</a></span>
+                        </div>
+                        <span class="genre g_romance">Action</span>
+                    </div>
+                    <div class="card_back g_romance">
+                        <div class="info">
+                            <h3 class="subj">Subhero</h3>
+                            <p class="author">June</p>
+                            <p class="line"></p>
+                            <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                answer is the unthinkable: ...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card_item">
+                        <div class="card_lst">
+                            <img src="./upload/img/product06.jpg" alt="" style="width:210px; height:210px"></img>
+
+                        </div>
+                        <div class="card_front">
+                            <h5>Subhero</h5>
+                            <span class="fa fa-heart"> <a class="num">7M</a></span>
+                        </div>
+                        <span class="genre g_romance">Action</span>
+                    </div>
+                    <div class="card_back g_romance">
+                        <div class="info">
+                            <h3 class="subj">Subhero</h3>
+                            <p class="author">June</p>
+                            <p class="line"></p>
+                            <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                answer is the unthinkable: ...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card_item">
+                        <div class="card_lst">
+                            <img src="./upload/img/product07.jpg" alt="" style="width:210px; height:210px"></img>
+
+                        </div>
+                        <div class="card_front">
+                            <h5>Subhero</h5>
+                            <span class="fa fa-heart"> <a class="num">7M</a></span>
+                        </div>
+                        <span class="genre g_romance">Action</span>
+                    </div>
+                    <div class="card_back g_romance">
+                        <div class="info">
+                            <h3 class="subj">Subhero</h3>
+                            <p class="author">June</p>
+                            <p class="line"></p>
+                            <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                answer is the unthinkable: ...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card_item">
+                        <div class="card_lst">
+                            <img src="./upload/img/product08.jpg" alt="" style="width:210px; height:210px"></img>
+
+                        </div>
+                        <div class="card_front">
+                            <h5>Subhero</h5>
+                            <span class="fa fa-heart"> <a class="num">7M</a></span>
+                        </div>
+                        <span class="genre g_romance">Action</span>
+                    </div>
+                    <div class="card_back g_romance">
+                        <div class="info">
+                            <h3 class="subj">Subhero</h3>
+                            <p class="author">June</p>
+                            <p class="line"></p>
+                            <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                answer is the unthinkable: ...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card_item">
+                        <div class="card_lst">
+                            <img src="./upload/img/product09.jpg" alt="" style="width:210px; height:210px"></img>
+
+                        </div>
+                        <div class="card_front">
+                            <h5>Subhero</h5>
+                            <span class="fa fa-heart"> <a class="num">7M</a></span>
+                        </div>
+                        <span class="genre g_romance">Action</span>
+                    </div>
+                    <div class="card_back g_romance">
+                        <div class="info">
+                            <h3 class="subj">Subhero</h3>
+                            <p class="author">June</p>
+                            <p class="line"></p>
+                            <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                answer is the unthinkable: ...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card_item">
+                        <div class="card_lst">
+                            <img src="./upload/img/product10.jpg" alt="" style="width:210px; height:210px"></img>
+
+                        </div>
+                        <div class="card_front">
+                            <h5>Subhero</h5>
+                            <span class="fa fa-heart"> <a class="num">7M</a></span>
+                        </div>
+                        <span class="genre g_romance">Action</span>
+                    </div>
+                    <div class="card_back g_romance">
+                        <div class="info">
+                            <h3 class="subj">Subhero</h3>
+                            <p class="author">June</p>
+                            <p class="line"></p>
+                            <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                answer is the unthinkable: ...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <div class="card_new">
+            <h4 style="text-align: center">New to WebToons</h4>
+            <div class="card_item">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/newproduct/NewProduct01.jpg" alt=""
+                                    style="width:210px; height:210px"></img>
+
+                            </div>
+                            <div class="card_front">
+                                <h5>Subhero</h5>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                            <span class="genre g_romance">Action</span>
+                        </div>
+                        <div class="card_back g_romance">
+                            <div class="info">
+                                <h3 class="subj">Subhero</h3>
+                                <p class="author">June</p>
+                                <p class="line"></p>
+                                <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                    protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                    answer is the unthinkable: ...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/newproduct/NewProduct02.jpg" alt=""
+                                    style="width:210px; height:210px"></img>
+
+                            </div>
+                            <div class="card_front">
+                                <h5>Subhero</h5>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                            <span class="genre g_romance">Action</span>
+                        </div>
+                        <div class="card_back g_romance">
+                            <div class="info">
+                                <h3 class="subj">Subhero</h3>
+                                <p class="author">June</p>
+                                <p class="line"></p>
+                                <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                    protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                    answer is the unthinkable: ...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/newproduct/NewProduct03.jpg" alt=""
+                                    style="width:210px; height:210px"></img>
+
+                            </div>
+                            <div class="card_front">
+                                <h5>Subhero</h5>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                            <span class="genre g_romance">Action</span>
+                        </div>
+                        <div class="card_back g_romance">
+                            <div class="info">
+                                <h3 class="subj">Subhero</h3>
+                                <p class="author">June</p>
+                                <p class="line"></p>
+                                <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                    protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                    answer is the unthinkable: ...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 carl_multi">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/newproduct/NewProductMulti02.jpg" alt="" />
+                            </div>
+                            <div class="card_front">
+                                <h5>The Witch and the Bul</h5>
+                                <p class="summary">Tan's job as the King's royal advisor has nothing to do with his
+                                    hatred for witches, but it does make him a prime target for a c...</p>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                            <span class="genre g_romance">Fantacy</span>
+                            <div class="card_back g_romance">
+                                <div class="info">
+                                    <h3 class="subj">SubZero</h3>
+                                    <p class="author">Junepurrr</p>
+                                    <p class="line"></p>
+                                    <p class="summary">What would you sacrifice to save your family? How far would you
+                                        go to
+                                        protect your
+                                        people? For Clove, the last princess of a near-extinct Dragon clan, the answer
+                                        is
+                                        the unthinkable:
+                                        ...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <div class="main_genre_wrap">
+            <h4 style="text-align: center; padding-bottom: 30px;">Genres
+                <span class="icol">&gt;</span>
+            </h4>
+            <div class="main_genre">
+                <div class="row">
+                    <div class="col-lg-2 ico1">
+                        <div class="info">
+                            <div class="inf_card_front">
+                                <h5>Comedy</h5>
+                            </div>
+                            <span class="inf_genre">Come save the world with me</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/gneres/product01.jpg" alt="" />
+                            </div>
+                            <div class="card_front">
+                                <h5>Subhero</h5>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                        </div>
+                        <div class="card_back g_romance">
+                            <div class="info">
+                                <h3 class="subj">Subhero</h3>
+                                <p class="author">Action</p>
+                                <p class="line"></p>
+                                <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                    protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                    answer is the unthinkable: ...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/gneres/product02.jpg" alt="" />
+                            </div>
+                            <div class="card_front">
+                                <h5>Subhero</h5>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                        </div>
+                        <div class="card_back g_romance">
+                            <div class="info">
+                                <h3 class="subj">Subhero</h3>
+                                <p class="author">Action</p>
+                                <p class="line"></p>
+                                <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                    protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                    answer is the unthinkable: ...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/gneres/product03.jpg" alt="" />
+                            </div>
+                            <div class="card_front">
+                                <h5>Subhero</h5>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                        </div>
+                        <div class="card_back g_romance">
+                            <div class="info">
+                                <h3 class="subj">Subhero</h3>
+                                <p class="author">Action</p>
+                                <p class="line"></p>
+                                <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                    protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                    answer is the unthinkable: ...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/gneres/product04.jpg" alt="" />
+                            </div>
+                            <div class="card_front">
+                                <h5>Subhero</h5>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                        </div>
+                        <div class="card_back g_romance">
+                            <div class="info">
+                                <h3 class="subj">Subhero</h3>
+                                <p class="author">Action</p>
+                                <p class="line"></p>
+                                <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                    protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                    answer is the unthinkable: ...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-2 ico2">
+                        <div class="info">
+                            <div class="inf_card_front">
+                                <h5>Slice of lice</h5>
+                            </div>
+                            <span class="inf_genre">Immerse, Imagine, and Inspire.</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/gneres/product05.jpg" alt="" />
+                            </div>
+                            <div class="card_front">
+                                <h5>Subhero</h5>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                        </div>
+                        <div class="card_back g_romance">
+                            <div class="info">
+                                <h3 class="subj">Subhero</h3>
+                                <p class="author">Action</p>
+                                <p class="line"></p>
+                                <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                    protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                    answer is the unthinkable: ...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/gneres/product06.jpg" alt="" />
+                            </div>
+                            <div class="card_front">
+                                <h5>Subhero</h5>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                        </div>
+                        <div class="card_back g_romance">
+                            <div class="info">
+                                <h3 class="subj">Subhero</h3>
+                                <p class="author">Action</p>
+                                <p class="line"></p>
+                                <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                    protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                    answer is the unthinkable: ...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/gneres/product07.jpg" alt="" />
+                            </div>
+                            <div class="card_front">
+                                <h5>Subhero</h5>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                        </div>
+                        <div class="card_back g_romance">
+                            <div class="info">
+                                <h3 class="subj">Subhero</h3>
+                                <p class="author">Action</p>
+                                <p class="line"></p>
+                                <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                    protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                    answer is the unthinkable: ...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="card_item">
+                            <div class="card_lst">
+                                <img src="./upload/img/gneres/product08.jpg" alt="" />
+                            </div>
+                            <div class="card_front">
+                                <h5>Subhero</h5>
+                                <span class="fa fa-heart"> <a class="num">7M</a></span>
+                            </div>
+                        </div>
+                        <div class="card_back g_romance">
+                            <div class="info">
+                                <h3 class="subj">Subhero</h3>
+                                <p class="author">Action</p>
+                                <p class="line"></p>
+                                <p class="summary">What would you sacrifice to save your family? How far would you go to
+                                    protect your people? For Clove, the last princess of a near-extinct Dragon clan, the
+                                    answer is the unthinkable: ...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="ranking_lst main">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="left_area" id="genreRanking">
+                    <div class="title_area">
+                        <h5>
+                            <p href="#">Most Popular by Genres
+                                <em class="ico_arr1"> &gt; </em>
+                            </p>
+                        </h5>
+                        <div class="sort_area _filterArea">
+                            <span href="#" class="checked">
+                                Slice of life
+                                <i class="fa fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="lst_type1">
+                    <li>
+                        <div class="pic_area">
+                            <span class="num_ranking ico_n1">1</span>
+                            <img src="./upload/img/ranking/11_EC8DB8EB84A4EC9DBC_mobile.jpg" />
+                        </div>
+                        <div class="info_area">
+                            <p class="genre g_slice_of_life">Slice of life</p>
+                            <p class="subj">My Giant Nerd Boyfriend</p>
+                            <p class="author">fishball</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic_area">
+                            <span class="num_ranking ico_n1">2</span>
+                            <img src="./upload/img/ranking/product02.jpg" />
+                        </div>
+                        <div class="info_area">
+                            <p class="genre g_slice_of_life">Slice of life</p>
+                            <p class="subj">Smal World</p>
+                            <p class="author">Wonsun Jin</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic_area">
+                            <span class="num_ranking ico_n1">3</span>
+                            <img src="./upload/img/ranking/product03.jpg" />
+                        </div>
+                        <div class="info_area">
+                            <p class="genre g_slice_of_life">Slice of life</p>
+                            <p class="subj">Waffles &amp; Pancakes</p>
+                            <p class="author">DT Saranya</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic_area">
+                            <span class="num_ranking ico_n1">4</span>
+                            <img src="./upload/img/ranking/product04.jpg" />
+                        </div>
+                        <div class="info_area">
+                            <p class="genre g_slice_of_life">Slice of life</p>
+                            <p class="subj">Saphie: The One-Eyed Cat</p>
+                            <p class="author">joho</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic_area">
+                            <span class="num_ranking ico_n1">5</span>
+                            <img src="./upload/img/ranking/product05.jpg" />
+                        </div>
+                        <div class="info_area">
+                            <p class="genre g_slice_of_life">Slice of life</p>
+                            <p class="subj">My Name is Benny</p>
+                            <p class="author">Sokomin</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-5">
+                <div class="right_area" id="genreRanking">
+                    <div class="title_area">
+                        <h5>
+                            <p href="#">Most Popular by Genres
+                                <em class="ico_arr1"> &gt; </em>
+                            </p>
+                        </h5>
+                        <div class="sort_area _filterArea">
+                            <span href="#" class="checked">
+                                Females in 30's
+                                <i class="fa fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="lst_type1">
+                    <li>
+                        <div class="pic_area">
+                            <span class="num_ranking ico_n1">1</span>
+                            <img src="./upload/img/ranking/product06.jpg" />
+                        </div>
+                        <div class="info_area">
+                            <p class="genre g_romance">Romance</p>
+                            <p class="subj">Lore Olympus</p>
+                            <p class="author">Rachel Smythe</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic_area">
+                            <span class="num_ranking ico_n1">2</span>
+                            <img src="./upload/img/ranking/product07.jpg" />
+                        </div>
+                        <div class="info_area">
+                            <p class="genre g_drama">Drama</p>
+                            <p class="subj">True Beuty</p>
+                            <p class="author">Yaongyi</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic_area">
+                            <span class="num_ranking ico_n1">3</span>
+                            <img src="./upload/img/ranking/product08.jpg" />
+                        </div>
+                        <div class="info_area">
+                            <p class="genre g_romance">Romance</p>
+                            <p class="subj">Let's play</p>
+                            <p class="author">Mongie</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic_area">
+                            <span class="num_ranking ico_n1">4</span>
+                            <img src="./upload/img/ranking/product09.jpg" />
+                        </div>
+                        <div class="info_area">
+                            <p class="genre g_fantasy">Fantacy</p>
+                            <p class="subj">unOrdinary</p>
+                            <p class="author">uru-chan</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic_area">
+                            <span class="num_ranking ico_n1">5</span>
+                            <img src="./upload/img/ranking/product10.jpg" />
+                        </div>
+                        <div class="info_area">
+                            <p class="genre g_romance">Romance</p>
+                            <p class="subj">Age Matters</p>
+                            <p class="author">Enjelicious</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="main_challenge_wrap">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="title_area">
+                    <h1 class="txt_challenge">WEBTOON <br /> CANVAS</h1>
+                    <p style="font-size:15px">Have a story to tell? Share it on WEBTOON Canvas.<br />
+                        Find everything you need to get it published.</p>
+                    <div class="btn_find">
+                        <span href>Find out more &gt; </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="challenge_spot_list ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <span class="skin"></span>
+                                <img src="./upload/img/footer/product01.jpg" alt="" />
+                                <div class="info_area">
+                                    <p class="subj">The Daybreak Protocol</p>
+                                    <p class="author">Two Wires Lab</p>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <span class="skin"></span>
+                                <img src="./upload/img/footer/product02.jpg" alt="" />
+                                <div class="info_area">
+                                    <p class="subj">The Daybreak Protocol</p>
+                                    <p class="author">Two Wires Lab</p>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <span class="skin"></span>
+                                <img src="./upload/img/footer/product03.jpg" alt="" />
+                                <div class="info_area">
+                                    <p class="subj">The Daybreak Protocol</p>
+                                    <p class="author">Two Wires Lab</p>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <span class="skin"></span>
+                                <img src="./upload/img/footer/product04.jpg" alt="" />
+                                <div class="info_area">
+                                    <p class="subj">The Daybreak Protocol</p>
+                                    <p class="author">Two Wires Lab</p>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <span class="skin"></span>
+                                <img src="./upload/img/footer/product05.jpg" alt="" />
+                                <div class="info_area">
+                                    <p class="subj">The Daybreak Protocol</p>
+                                    <p class="author">Two Wires Lab</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm">
+                                <span class="skin"></span>
+                                <img src="./upload/img/footer/product06.jpg" alt="" />
+                                <div class="info_area">
+                                    <p class="subj">The Daybreak Protocol</p>
+                                    <p class="author">Two Wires Lab</p>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <span class="skin"></span>
+                                <img src="./upload/img/footer/product07.jpg" alt="" />
+                                <div class="info_area">
+                                    <p class="subj">The Daybreak Protocol</p>
+                                    <p class="author">Two Wires Lab</p>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <span class="skin"></span>
+                                <img src="./upload/img/footer/product08.jpg" alt="" />
+                                <div class="info_area">
+                                    <p class="subj">The Daybreak Protocol</p>
+                                    <p class="author">Two Wires Lab</p>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <span class="skin"></span>
+                                <img src="./upload/img/footer/product09.jpg" alt="" />
+                                <div class="info_area">
+                                    <p class="subj">The Daybreak Protocol</p>
+                                    <p class="author">Two Wires Lab</p>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <span class="skin"></span>
+                                <img src="./upload/img/footer/product10.jpg" alt="" />
+                                <div class="info_area">
+                                    <p class="subj">The Daybreak Protocol</p>
+                                    <p class="author">Two Wires Lab</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="padding-top:25px">
+        <div class="footer-Original">
+            <div class="notice">
+                <p>Notice &gt; WEBTOON's Beta Creator Credit for<span> DecemberJan 30, 2020</span></p>
+            </div>
+            <div class="download-Original">
+                <h3>Download WEBTOON now!</h3>
+                <div class="box-Download">
+                    <a href="#"><img src="https://www.homecredit.vn/app/webroot/img/app_badge/google-play-badge-EN.png"
+                            width="138px" height="39px" alt=""></a>
+                    <a href="#"><img
+                            src="https://deo.shopeemobile.com/shopee/shopee-appdlpage-live-vn/static/img/appleStore.0ca159be.png"
+                            alt="" width="138px" height="39px"></a>
+                </div>
+            </div>
+            <div class="end-Footer">
+                <div class="end-Footer-Icon">
+                    <span><i class="fa fa-facebook"></i></span>
+                    <span><i class="fa fa-instagram"></i></span>
+                    <span><i class="fa fa-twitter"></i></span>
+                    <span><i class="fa fa-youtube"></i></span>
+                </div>
+                <div class="end-Footer-Menu">
+                    <ul>
+                        <li><a href>About</a></li>
+                        <li class="icolf"><a href>|</a></li>
+                        <li><a href>Feedback</a></li>
+                        <li class="icolf"><a href>|</a></li>
+                        <li><a href>Terms</a></li>
+                        <li class="icolf"><a href>|</a></li>
+                        <li><a href>Help</a></li>
+                        <li class="icolf"><a href>|</a></li>
+                        <li><a href>Privacy</a></li>
+                    </ul>
+                </div>
+                <div class="end-Footer-Logo">
+                    <img src="./img/logo.jpg" alt="" width="105px" height="90px" />
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
