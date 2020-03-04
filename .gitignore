@@ -9,3 +9,17 @@
 /comic-core-data/target
 /comic-core-dal/target
 /comic-web-exception/target
+/comic-web-exception/comic-web-exception-api.iml
+/comic-web-utils/comic-web-utils.iml
+/comic-core-utils/comic-core-utils.iml
+/comic-core-service/comic-core-service.iml
+/.idea
+/classes
+/comic-core-dal/comic-core-dal.iml
+/comic-core-data/comic-core-data.iml
+/comic-core-dto/*.iml
+/comic-core-test/comic-core-test.iml
+/comic-web/*.iml
+/comic-web-logic/*.iml
+/out
+/comic-web/src/main/webapp/template
